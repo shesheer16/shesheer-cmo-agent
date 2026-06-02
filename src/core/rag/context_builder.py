@@ -7,6 +7,7 @@ class ContextPackage(BaseModel):
     formatted_context: str
     total_tokens: int
     chunks_included: int
+    sources: List[str] = []
 
 class ContextBuilder:
     def __init__(self):
@@ -66,7 +67,8 @@ class ContextBuilder:
         return ContextPackage(
             formatted_context=formatted_context,
             total_tokens=current_tokens,
-            chunks_included=chunks_included
+            chunks_included=chunks_included,
+            sources=list(set([c.metadata.get("url", c.metadata.get("filename", "Unknown")) for c in sorted_chunks[:chunks_included]]))
         )
         
     def _format_startup_context(self, startup_context: Dict[str, Any]) -> str:
