@@ -52,5 +52,7 @@ dependencies = [
     "langdetect>=1.0.9",
     "tiktoken>=0.7.0",
     "rich>=13.0.0",
+    "pyyaml>=6.0.1",
     "click>=8.0.0",
+    "numpy>=1.24.0",
 ]

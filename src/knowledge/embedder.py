@@ -47,20 +47,14 @@ class Embedder:
 
         start_time = time.time()
         
-        # We detect the language of the first text to decide the model for the whole batch
-        # This assumes batches are homogeneous in language.
-        first_text = texts[0]
-        lang = self.detect_language(first_text)
-
-        if lang == "en":
-            model = self._load_en_model()
-            model_name = "all-MiniLM-L6-v2"
-            texts_to_embed = texts
-        else:
-            model = self._load_multi_model()
-            model_name = "intfloat/multilingual-e5-large"
-            # E5 models generally require a 'passage: ' prefix for document embeddings
-            texts_to_embed = [f"passage: {t}" for t in texts]
+        # To fix the ChromaDB mixed-dimensionality crash, we standardize on 
+        # the highly capable multilingual-e5-large model for ALL content (1024 dimensions).
+        # This prevents the collection from receiving both 384D and 1024D vectors.
+        model = self._load_multi_model()
+        model_name = "intfloat/multilingual-e5-large"
+        
+        # E5 models generally require a 'passage: ' prefix for document embeddings
+        texts_to_embed = [f"passage: {t}" for t in texts]
 
         # Convert to a standard Python list of floats
         embeddings = model.encode(texts_to_embed, convert_to_numpy=True).tolist()

@@ -1,0 +1,22 @@
+sources:
+  - name: "The Ken - EdTech Archives"
+    base_url: "https://the-ken.com"
+    topics: ["edtech", "startup", "india"]
+    collection: "market_data_reports"
+    articles:
+      - url: "https://the-ken.com/story/physicswallah-unicorn/"
+        title: "The Learning Trap coverage"
+        priority: 1
+
+  - name: "Blume Indus Valley Report"
+    url: "https://blume.vc/reports/indus-valley-annual-report-2025"
+    type: "pdf_download"
+    collection: "market_data_reports"
+    priority: 1
+
+  - name: "Nithin Kamath Blog"
+    base_url: "https://zerodha.com/blog"
+    author: "Nithin Kamath"
+    collection: "founders_mindsets"
+    priority: 1
+    articles: []

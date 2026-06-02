@@ -1,0 +1,24 @@
+sources:
+  - person: "Kunal Shah"
+    collection: "founders_mindsets"
+    market_phase: "1_to_10"
+    insight_type: "consumer_psychology"
+    applicable_segment: "India1_urban"
+    videos:
+      - url: "https://youtu.be/fWm_NKCtXdA?si=Cuj5On99LKiMYXOH"
+        title: "Kunal Shah on Delta 4 Framework"
+        priority: 1
+      - url: "https://youtu.be/K5hOZLPR6Ws?si=6dwqacZtYkXr94Ri"
+        title: "CRED Curious - Trust and Indian Consumer"
+        priority: 1
+
+  - person: "Alakh Pandey"
+    collection: "founders_mindsets"
+    market_phase: "0_to_1"
+    insight_type: "trust"
+    applicable_segment: "Tier2_Tier3_students"
+    videos:
+      - url: "https://youtu.be/aSESxwH3I74?si=BGZ0Pll85bs-L7eq"
+        title: "PW Origin Story - Nikhil Kamath"
+        priority: 1
+
