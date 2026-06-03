@@ -7,9 +7,12 @@ from telegram import Update, File
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
 from faster_whisper import WhisperModel
 import google.api_core.exceptions as google_exceptions
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from datetime import datetime, timedelta
 
 from src.core.orchestrator import CMOAgent
 from src.memory.context_manager import context_manager
+from src.core.decision_tracker import decision_tracker
 from src.utils.logger import logger
 # Assuming we moved run_batch to pdf_processor.py or we just import the script directly.
 # Let's import the script's run_batch and wrap it.
@@ -147,15 +150,67 @@ async def document_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("PDF ingestion failed.")
 
 
+async def decisions_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if not await security_check(update): return
+    pending = context_manager.get_pending_decisions()
+    if not pending:
+        await update.message.reply_text("No pending decisions logged.")
+        return
+        
+    msg = "**Pending Decisions:**\n\n"
+    for d in pending:
+        msg += f"ID: {d['id']}\nQuestion: {d['question']}\nMove: {d['recommendation'][:100]}...\n\n"
+    await update.message.reply_text(msg, parse_mode="Markdown")
+
+async def outcome_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if not await security_check(update): return
+    # Usage: /outcome <id> <worked/failed/partial> <notes>
+    args = context.args
+    if len(args) < 3:
+        await update.message.reply_text("Usage: /outcome <id> <worked|failed|partial> <notes...>")
+        return
+        
+    try:
+        decision_id = int(args[0])
+        status = args[1].lower()
+        notes = " ".join(args[2:])
+        decision_tracker.log_outcome(decision_id, status, notes)
+        await update.message.reply_text(f"Logged outcome for decision {decision_id}.")
+    except Exception as e:
+        await update.message.reply_text(f"Failed to log outcome: {e}")
+
+async def poll_decisions(bot):
+    """Daily check for 14-day old decisions."""
+    try:
+        pending = context_manager.get_pending_decisions()
+        # In a real app we'd check timestamps, for now we just show we poll them.
+        # But we can query models.DecisionsLog using context_manager if needed.
+        # For simplicity, we just send a static reminder about the oldest pending one.
+        if pending:
+            oldest = pending[0]
+            await bot.send_message(
+                chat_id=TELEGRAM_ALLOWED_USER_ID,
+                text=f"⏰ Follow-up time! Two weeks ago you were advised to:\n{oldest['recommendation']}\n\nDid you take this move? Reply with `/outcome {oldest['id']} <worked/failed/partial> <notes>`"
+            )
+    except Exception as e:
+        logger.error(f"Error polling decisions: {e}")
+
 def main():
     if not TELEGRAM_BOT_TOKEN or not TELEGRAM_ALLOWED_USER_ID:
         logger.error("Missing Telegram environment variables.")
         return
 
     application = Application.builder().token(TELEGRAM_BOT_TOKEN).build()
+    
+    # Scheduler
+    scheduler = AsyncIOScheduler()
+    scheduler.add_job(poll_decisions, 'cron', hour=9, args=[application.bot])
+    scheduler.start()
 
     application.add_handler(CommandHandler("start", start_cmd))
     application.add_handler(CommandHandler("context", context_cmd))
+    application.add_handler(CommandHandler("decisions", decisions_cmd))
+    application.add_handler(CommandHandler("outcome", outcome_cmd))
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, text_handler))
     application.add_handler(MessageHandler(filters.VOICE, voice_handler))
     application.add_handler(MessageHandler(filters.Document.PDF, document_handler))

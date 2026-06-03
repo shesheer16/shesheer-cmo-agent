@@ -2,11 +2,12 @@ import time
 import asyncio
 from typing import List, Dict, Any, Optional
 from pydantic import BaseModel
-from src.utils.logger import logger
 from src.core.rag.rag_pipeline import rag_pipeline
 from src.core.reasoning_engine import reasoning_engine
 from src.core.system_prompt import build_system_prompt
 from src.core.response_formatter import response_formatter
+from src.core.challenger import detect_unchallenged_assumptions
+from src.core.decision_tracker import decision_tracker
 
 # We'll assume USD to INR conversion rate
 USD_TO_INR = 83.50
@@ -32,10 +33,15 @@ class CMOAgent:
         startup_context = context_manager.get_context()
         history = context_manager.get_recent_history(n=5)
         
-        # 2. Build system prompt
+        # 2. Build system prompt & inject challenges
         system_prompt = build_system_prompt(startup_context)
         
-        # 3. Run RAG Pipeline
+        challenges = detect_unchallenged_assumptions(user_message, startup_context)
+        if challenges:
+            challenge_texts = "\n".join([c.to_prompt_text() for c in challenges])
+            system_prompt += f"\n\n[CHALLENGER MODE ACTIVATED]\nIntegrate these challenges into your reasoning if relevant:\n{challenge_texts}"
+            
+        # 3. Retrieve context via RAG Pipeline
         rag_start = time.time()
         context_package = await rag_pipeline.process(
             user_query=user_message,
@@ -56,17 +62,17 @@ class CMOAgent:
         
         # 5. Format response based on requested output type
         if output_format == "telegram":
-            # For Telegram we might get a list, but AgentResponse expects a single str for now,
-            # or we join it back/handle it. We will join it with breaks.
-            parts = response_formatter.format_for_telegram(raw_response)
-            formatted_text = "\n\n".join(parts)
-        elif output_format == "streamlit":
-            formatted_text = response_formatter.format_for_streamlit(raw_response)
+            formatted_text = response_formatter.format_for_telegram(raw_response)
         elif output_format == "voice":
             formatted_text = response_formatter.format_for_voice(raw_response)
+        elif output_format == "streamlit":
+            formatted_text = response_formatter.format_for_streamlit(raw_response)
         else:
             formatted_text = raw_response
             
+        # Extract and log decision automatically
+        decision_tracker.extract_and_log_decision(user_message, raw_response)
+        
         # We save this later after we extract sources and tokens.
         
         # Extract sources used
