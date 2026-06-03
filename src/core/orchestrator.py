@@ -20,29 +20,8 @@ class AgentResponse(BaseModel):
     retrieval_time_ms: int
     total_time_ms: int
 
-class MemoryLayerMock:
-    """Mock memory layer until Phase 5 is implemented."""
-    def __init__(self):
-        self.startup_context = {
-            "domain": "EdTech",
-            "stage": "Seed",
-            "target": "Tier 2/3 India",
-            "challenge": "Distribution and trust"
-        }
-        self.conversation_history = []
-        
-    def get_startup_context(self) -> Dict[str, Any]:
-        return self.startup_context
-        
-    def get_recent_history(self) -> List[str]:
-        return self.conversation_history[-5:] if self.conversation_history else []
-        
-    def save_turn(self, user_message: str, agent_response: str):
-        self.conversation_history.append(f"Founder: {user_message}")
-        self.conversation_history.append(f"CMO: {agent_response}")
+from src.memory.context_manager import context_manager, ConversationData
 
-# Initialize the mock memory
-memory = MemoryLayerMock()
 
 class CMOAgent:
     
@@ -50,8 +29,8 @@ class CMOAgent:
         total_start = time.time()
         
         # 1. Load context and history from memory layer
-        startup_context = memory.get_startup_context()
-        history = memory.get_recent_history()
+        startup_context = context_manager.get_context()
+        history = context_manager.get_recent_history(n=5)
         
         # 2. Build system prompt
         system_prompt = build_system_prompt(startup_context)
@@ -88,8 +67,7 @@ class CMOAgent:
         else:
             formatted_text = raw_response
             
-        # 6. Save to memory
-        memory.save_turn(user_message, formatted_text)
+        # We save this later after we extract sources and tokens.
         
         # Extract sources used
         sources_used = context_package.sources
@@ -102,6 +80,19 @@ class CMOAgent:
         # Gemini Free Tier has 0 cost, but if paid it's ~ $0.075 per 1M input / $0.30 per 1M output
         usd_cost = (est_input_tokens / 1_000_000 * 0.075) + (est_output_tokens / 1_000_000 * 0.30)
         cost_inr = usd_cost * USD_TO_INR
+        
+        # 6. Save to memory
+        conv_data = ConversationData(
+            user_message=user_message,
+            agent_response=formatted_text,
+            sources=sources_used,
+            tokens_used=total_tokens,
+            cost_inr=cost_inr,
+            model=model,
+            conv_type="strategy"
+        )
+        conv_id = context_manager.save_conversation(conv_data)
+        context_manager.update_cost_tracker(tokens=total_tokens, cost=cost_inr, model=model, conversation_id=conv_id)
         
         total_time_ms = int((time.time() - total_start) * 1000)
         
@@ -124,10 +115,10 @@ class CMOAgent:
         start = time.time()
         
         # Step-by-step debug logic mirroring respond
-        startup_context = memory.get_startup_context()
+        startup_context = context_manager.get_context()
         print(f"1. Loaded Startup Context: {startup_context}")
         
-        history = memory.get_recent_history()
+        history = context_manager.get_recent_history(n=5)
         print(f"2. Loaded History: {len(history)} turns")
         
         context_package = asyncio.run(rag_pipeline.process(question, startup_context, history))
