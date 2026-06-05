@@ -117,6 +117,7 @@ shesheer_cmo_agent/
 ├── README.md                          ← This file
 ├── STACK.md                           ← Complete tech stack decisions
 ├── ARCHITECTURE.md                    ← System architecture deep dive
+├── DEPLOY.md                          ← Deployment instructions
 │
 ├── Phase-0-Foundation/
 │   └── PHASE_0_PLAN.md

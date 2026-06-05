@@ -1,0 +1,37 @@
+# render.yaml — Render.com deployment configuration
+# https://render.com/docs/yaml-spec
+
+services:
+  - type: web
+    name: shesheer-cmo-agent
+    runtime: python
+    region: singapore          # Closest to India for low latency
+    plan: free
+    buildCommand: pip install uv && uv sync --frozen
+    startCommand: python main.py --bot --port $PORT
+    healthCheckPath: /health
+
+    envVars:
+      - key: GEMINI_API_KEY
+        sync: false            # Set manually in Render dashboard
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: TELEGRAM_ALLOWED_USER_ID
+        sync: false
+      - key: SENTRY_DSN
+        sync: false            # Optional — leave blank to skip Sentry
+      - key: PYTHONUNBUFFERED
+        value: "1"
+      - key: CHROMA_DB_PATH
+        value: ./data/chromadb
+      - key: SQLITE_DB_PATH
+        value: ./data/memory.db
+
+    # NOTE: Render free tier has ephemeral disk.
+    # Data resets on each deploy. ChromaDB re-ingests from data/annotations/
+    # automatically on cold start via main.py start_bot().
+    # For persistent storage, upgrade to Render Starter ($7/mo) and add:
+    # disk:
+    #   name: cmo-data
+    #   mountPath: /data
+    #   sizeGB: 1

@@ -65,8 +65,14 @@ def ingest_rss_feeds():
 
 def run_weekly_maintenance():
     logger.info("Running weekly maintenance job")
-    # For now, just logging as compression is done on-the-fly in ContextManager
+    import asyncio
+    try:
+        from src.utils.monitor import send_weekly_report_telegram
+        asyncio.run(send_weekly_report_telegram())
+    except Exception as e:
+        logger.error(f"Weekly report failed: {e}")
     logger.info("Weekly maintenance completed.")
+
 
 def start_scheduler():
     scheduler = BackgroundScheduler()

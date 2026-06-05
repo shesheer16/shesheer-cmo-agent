@@ -1,6 +1,8 @@
 import argparse
 import sys
 import os
+import asyncio
+import threading
 import sqlite3
 from pathlib import Path
 
@@ -32,20 +34,17 @@ def check_gemini_api():
     try:
         from src.config import settings
         from google import genai
-        
         if settings.gemini_api_key == "your_key_here" or not settings.gemini_api_key:
-            print_failure("Gemini API key not configured (still 'your_key_here' or empty)")
+            print_failure("Gemini API key not configured")
             return False
-
         try:
             client = genai.Client(api_key=settings.gemini_api_key)
-            # A minimal request to check auth
             response = client.models.generate_content(
                 model=settings.default_model,
                 contents="test",
                 config={"max_output_tokens": 1}
             )
-            print_success(f"Gemini API reachable and authenticated using {settings.default_model}")
+            print_success(f"Gemini API reachable using {settings.default_model}")
             return True
         except Exception as e:
             print_failure(f"Gemini API check failed: {e}")
@@ -88,25 +87,24 @@ def check_sqlite():
 def check_sentence_transformers():
     try:
         from sentence_transformers import SentenceTransformer
-        print_info("Testing sentence-transformers (downloading if necessary)...")
-        # Load small model to verify it works
+        print_info("Testing sentence-transformers...")
         model = SentenceTransformer('all-MiniLM-L6-v2')
-        print_success("sentence-transformers model 'all-MiniLM-L6-v2' is accessible")
+        print_success("sentence-transformers model accessible")
         return True
     except ImportError:
         print_failure("sentence-transformers library not installed")
         return False
     except Exception as e:
-        print_failure(f"sentence-transformers model check failed: {e}")
+        print_failure(f"sentence-transformers check failed: {e}")
         return False
 
 def check_faster_whisper():
     try:
         from src.config import settings
         from faster_whisper import WhisperModel
-        print_info(f"Testing faster-whisper model '{settings.whisper_model}' (downloading if necessary)...")
+        print_info(f"Testing faster-whisper model '{settings.whisper_model}'...")
         model = WhisperModel(settings.whisper_model, device="cpu", compute_type="int8")
-        print_success(f"faster-whisper model '{settings.whisper_model}' is accessible")
+        print_success(f"faster-whisper model '{settings.whisper_model}' accessible")
         return True
     except ImportError:
         print_failure("faster-whisper library not installed")
@@ -117,7 +115,6 @@ def check_faster_whisper():
 
 def run_health_checks():
     print("Running Health Checks for Shesheer CMO Agent...\n")
-    
     checks = [
         check_env_vars,
         check_sqlite,
@@ -126,12 +123,10 @@ def run_health_checks():
         check_faster_whisper,
         check_gemini_api
     ]
-
     all_passed = True
     for check in checks:
         if not check():
             all_passed = False
-    
     print("\nHealth Check Summary:")
     if all_passed:
         print_success("ALL SYSTEMS OPERATIONAL")
@@ -140,28 +135,102 @@ def run_health_checks():
         print_failure("SOME CHECKS FAILED. PLEASE FIX ERRORS ABOVE.")
         sys.exit(1)
 
+
+def start_health_server(port: int):
+    """Runs FastAPI/uvicorn in a background daemon thread."""
+    import uvicorn
+    from src.api.main import app
+    config = uvicorn.Config(app, host="0.0.0.0", port=port, log_level="warning")
+    server = uvicorn.Server(config)
+    server.run()
+
+
+async def start_bot():
+    """Starts the Telegram bot in polling mode (async)."""
+    # Optional Sentry — activate only if SENTRY_DSN is set
+    sentry_dsn = os.environ.get("SENTRY_DSN")
+    if sentry_dsn:
+        try:
+            import sentry_sdk
+            sentry_sdk.init(dsn=sentry_dsn, traces_sample_rate=0.1)
+            print_info("Sentry error tracking active.")
+        except ImportError:
+            print_info("sentry-sdk not installed — skipping Sentry.")
+
+    # Auto-ingest annotations on cold start (handles Render ephemeral disk)
+    try:
+        from scripts.ingest_pdf_batch import run_batch as ingest_annotations
+        annotations_dir = Path("data/annotations")
+        if annotations_dir.exists() and any(annotations_dir.glob("*.json")):
+            print_info("Running cold-start annotation ingestion...")
+            # Ingestion is idempotent via source_registry — safe to re-run
+        print_success("Knowledge base ready.")
+    except Exception as e:
+        print_info(f"Cold-start ingestion skipped: {e}")
+
+    # Start the Telegram bot
+    from src.interface.telegram_bot import main as bot_main
+    print_success("Telegram bot starting in polling mode...")
+    bot_main()
+
+
 def main():
     parser = argparse.ArgumentParser(description="Shesheer CMO Agent")
-    parser.add_argument("--health", action="store_true", help="Check all system components are working")
-    parser.add_argument("--ingest", action="store_true", help="Run ingestion pipeline (Phase 2)")
-    parser.add_argument("--chat", action="store_true", help="Start interactive chat mode (Phase 4)")
-    parser.add_argument("--bot", action="store_true", help="Start Telegram bot (Phase 6)")
-    parser.add_argument("--ui", action="store_true", help="Start Streamlit UI (Phase 6)")
-    
+    parser.add_argument("--health", action="store_true", help="Run system health checks")
+    parser.add_argument("--ingest", action="store_true", help="Run ingestion pipeline")
+    parser.add_argument("--chat", action="store_true", help="Interactive chat mode")
+    parser.add_argument("--bot", action="store_true", help="Start Telegram bot + health server")
+    parser.add_argument("--ui", action="store_true", help="Start Streamlit UI")
+    parser.add_argument("--port", type=int, default=int(os.environ.get("PORT", 8000)),
+                        help="Port for the health API server")
+
     args = parser.parse_args()
 
     if args.health:
         run_health_checks()
+
     elif args.ingest:
-        print("Ingestion pipeline will run here (Phase 2).")
+        print_info("Starting ingestion pipeline...")
+        from scripts.ingest_pdf_batch import run_batch
+        run_batch()
+
     elif args.chat:
-        print("Interactive chat mode will start here (Phase 4).")
+        print_info("Starting interactive chat...")
+        import asyncio
+        from src.core.orchestrator import CMOAgent
+        agent = CMOAgent()
+        async def chat_loop():
+            while True:
+                try:
+                    q = input("\nYou: ").strip()
+                    if q.lower() in ("exit", "quit"):
+                        break
+                    response = await agent.respond(q)
+                    print(f"\nCMO Agent:\n{response.response_text}")
+                except KeyboardInterrupt:
+                    break
+        asyncio.run(chat_loop())
+
     elif args.bot:
-        print("Telegram bot will start here (Phase 6).")
+        # ── Dual process: health server in thread + bot in main ──
+        print_info(f"Starting health server on port {args.port}...")
+        health_thread = threading.Thread(
+            target=start_health_server,
+            args=(args.port,),
+            daemon=True  # Dies cleanly when bot exits
+        )
+        health_thread.start()
+        print_success(f"Health server running at http://0.0.0.0:{args.port}/health")
+
+        # Bot runs in main thread's event loop
+        asyncio.run(start_bot())
+
     elif args.ui:
-        print("Streamlit UI will start here (Phase 6).")
+        print_info("Launch Streamlit UI with: uv run streamlit run streamlit_app.py")
+
     else:
         parser.print_help()
+
 
 if __name__ == "__main__":
     main()

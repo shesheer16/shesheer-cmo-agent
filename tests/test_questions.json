@@ -1,0 +1,22 @@
+[
+  {"id": 1, "q": "Should I launch freemium or paid for my Tier 2 test prep app?", "expected_keywords": ["freemium", "paid", "PW", "PhysicsWallah", "tier 2"]},
+  {"id": 2, "q": "How do I get my first 100 students without any marketing budget?", "expected_keywords": ["community", "WhatsApp", "teachers", "referral", "organic"]},
+  {"id": 3, "q": "Should I focus on metro cities or Tier 2 cities first?", "expected_keywords": ["tier 2", "metro", "distribution", "trust", "bharat"]},
+  {"id": 4, "q": "How do I get parents to trust an AI-powered learning product?", "expected_keywords": ["trust", "parent", "community", "credibility", "proof"]},
+  {"id": 5, "q": "Should I build a mobile app or WhatsApp-first product?", "expected_keywords": ["WhatsApp", "app", "distribution", "internet", "tier 2"]},
+  {"id": 6, "q": "How do I build brand trust from zero with no funding?", "expected_keywords": ["trust", "organic", "community", "brand", "founder"]},
+  {"id": 7, "q": "Should I run performance marketing or content marketing first?", "expected_keywords": ["content", "performance", "CAC", "organic", "stage"]},
+  {"id": 8, "q": "How do I compete against a well-funded EdTech competitor?", "expected_keywords": ["niche", "differentiation", "trust", "community", "funded"]},
+  {"id": 9, "q": "Should I do influencer marketing for my EdTech startup?", "expected_keywords": ["influencer", "trust", "authenticity", "tier 2", "parent"]},
+  {"id": 10, "q": "How do I price my test prep product for Tier 2 India?", "expected_keywords": ["pricing", "HPI", "tier 2", "₹", "affordable"]},
+  {"id": 11, "q": "What should my 90-day marketing roadmap look like for a seed-stage startup?", "expected_keywords": ["roadmap", "90 day", "seed", "priority", "channel"]},
+  {"id": 12, "q": "When should I raise Series A funding?", "expected_keywords": ["series A", "metrics", "retention", "MRR", "milestone"]},
+  {"id": 13, "q": "How do I know if I have product-market fit in the Indian EdTech market?", "expected_keywords": ["product-market fit", "retention", "NPS", "organic", "repeat"]},
+  {"id": 14, "q": "Should I pivot from B2C to B2B EdTech?", "expected_keywords": ["pivot", "B2B", "B2C", "distribution", "unit economics"]},
+  {"id": 15, "q": "How do I build distribution in states like UP, Bihar, and MP?", "expected_keywords": ["UP", "Bihar", "distribution", "local", "channel partners"]},
+  {"id": 16, "q": "I want to run a ₹10 lakh Instagram campaign. Should I?", "expected_keywords": ["Instagram", "validation", "organic", "CAC", "assumption"]},
+  {"id": 17, "q": "I think my product is ready to scale to 1 million users.", "expected_keywords": ["scale", "retention", "churn", "unit economics", "distribution"]},
+  {"id": 18, "q": "My current CAC is ₹500 per student. Is that fine?", "expected_keywords": ["CAC", "LTV", "retention", "benchmark", "tier 2"]},
+  {"id": 19, "q": "I want to hire a marketing team of 5 people immediately.", "expected_keywords": ["team", "hire", "organic", "stage", "founders"]},
+  {"id": 20, "q": "We are ready to expand internationally — should we go to Southeast Asia or Middle East?", "expected_keywords": ["international", "India", "home market", "retention", "premature"]}
+]

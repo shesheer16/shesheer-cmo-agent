@@ -31,7 +31,7 @@ class CMOAgent:
         
         # 1. Load context and history from memory layer
         startup_context = context_manager.get_context()
-        history = context_manager.get_recent_history(n=5)
+        history = context_manager.get_recent_conversations(n=5)
         
         # 2. Build system prompt & inject challenges
         system_prompt = build_system_prompt(startup_context)
@@ -124,7 +124,7 @@ class CMOAgent:
         startup_context = context_manager.get_context()
         print(f"1. Loaded Startup Context: {startup_context}")
         
-        history = context_manager.get_recent_history(n=5)
+        history = context_manager.get_recent_conversations(n=5)
         print(f"2. Loaded History: {len(history)} turns")
         
         context_package = asyncio.run(rag_pipeline.process(question, startup_context, history))
