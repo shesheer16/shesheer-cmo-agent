@@ -140,6 +140,7 @@ def start_health_server(port: int):
     """Runs FastAPI/uvicorn in a background daemon thread."""
     import uvicorn
     from src.api.main import app
+    port = int(os.environ.get("PORT", 10000))  # ← Use PORT env var
     config = uvicorn.Config(app, host="0.0.0.0", port=port, log_level="warning")
     server = uvicorn.Server(config)
     server.run()
@@ -181,7 +182,7 @@ def main():
     parser.add_argument("--chat", action="store_true", help="Interactive chat mode")
     parser.add_argument("--bot", action="store_true", help="Start Telegram bot + health server")
     parser.add_argument("--ui", action="store_true", help="Start Streamlit UI")
-    parser.add_argument("--port", type=int, default=int(os.environ.get("PORT", 8000)),
+    parser.add_argument("--port", type=int, default=int(os.environ.get("PORT", 10000)),
                         help="Port for the health API server")
 
     args = parser.parse_args()
