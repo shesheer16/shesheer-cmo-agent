@@ -1,0 +1,2 @@
+2026-06-06 19:01:43.569 | query_decomposer | INFO     | Decomposition cost: $0.00 (Local Keyword-based)
+2026-06-06 19:01:43.569 | context_builder | INFO     | Built context package: 0/0 chunks, 34 estimated tokens.

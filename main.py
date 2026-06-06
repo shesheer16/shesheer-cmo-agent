@@ -196,7 +196,7 @@ def main():
 
     elif args.chat:
         print_info("Starting interactive chat...")
-        import asyncio
+
         from src.core.orchestrator import CMOAgent
         agent = CMOAgent()
         async def chat_loop():

@@ -1,27 +1,99 @@
-2026-06-05 23:41:48.120 | chroma_client | INFO     | Initialized ChromaDB PersistentClient at ./data/chromadb
-2026-06-05 23:41:48.127 | chroma_client | DEBUG    | Verified collection: founders_mindsets
-2026-06-05 23:41:48.128 | chroma_client | DEBUG    | Verified collection: campaign_case_studies
-2026-06-05 23:41:48.128 | chroma_client | DEBUG    | Verified collection: cmo_profiles
-2026-06-05 23:41:48.128 | chroma_client | DEBUG    | Verified collection: market_data_reports
-2026-06-05 23:41:48.129 | chroma_client | DEBUG    | Verified collection: consumer_psychology
-2026-06-05 23:41:48.129 | chroma_client | DEBUG    | Verified collection: books_annotations
-2026-06-05 23:41:48.129 | chroma_client | DEBUG    | Verified collection: social_intelligence
-2026-06-05 23:41:48.130 | chroma_client | DEBUG    | Verified collection: startup_context
-2026-06-05 23:44:31.318 | chroma_client | INFO     | Initialized ChromaDB PersistentClient at ./data/chromadb
-2026-06-05 23:44:31.329 | chroma_client | DEBUG    | Verified collection: founders_mindsets
-2026-06-05 23:44:31.329 | chroma_client | DEBUG    | Verified collection: campaign_case_studies
-2026-06-05 23:44:31.330 | chroma_client | DEBUG    | Verified collection: cmo_profiles
-2026-06-05 23:44:31.330 | chroma_client | DEBUG    | Verified collection: market_data_reports
-2026-06-05 23:44:31.330 | chroma_client | DEBUG    | Verified collection: consumer_psychology
-2026-06-05 23:44:31.331 | chroma_client | DEBUG    | Verified collection: books_annotations
-2026-06-05 23:44:31.331 | chroma_client | DEBUG    | Verified collection: social_intelligence
-2026-06-05 23:44:31.331 | chroma_client | DEBUG    | Verified collection: startup_context
-2026-06-05 23:52:01.672 | chroma_client | INFO     | Initialized ChromaDB PersistentClient at ./data/chromadb
-2026-06-05 23:52:01.680 | chroma_client | DEBUG    | Verified collection: founders_mindsets
-2026-06-05 23:52:01.680 | chroma_client | DEBUG    | Verified collection: campaign_case_studies
-2026-06-05 23:52:01.681 | chroma_client | DEBUG    | Verified collection: cmo_profiles
-2026-06-05 23:52:01.681 | chroma_client | DEBUG    | Verified collection: market_data_reports
-2026-06-05 23:52:01.681 | chroma_client | DEBUG    | Verified collection: consumer_psychology
-2026-06-05 23:52:01.682 | chroma_client | DEBUG    | Verified collection: books_annotations
-2026-06-05 23:52:01.682 | chroma_client | DEBUG    | Verified collection: social_intelligence
-2026-06-05 23:52:01.682 | chroma_client | DEBUG    | Verified collection: startup_context
+2026-06-06 19:01:17.752 | chroma_client | INFO     | Initialized ChromaDB PersistentClient at ./data/chromadb
+2026-06-06 19:01:17.761 | chroma_client | DEBUG    | Verified collection: founders_mindsets
+2026-06-06 19:01:17.761 | chroma_client | DEBUG    | Verified collection: campaign_case_studies
+2026-06-06 19:01:17.761 | chroma_client | DEBUG    | Verified collection: cmo_profiles
+2026-06-06 19:01:17.762 | chroma_client | DEBUG    | Verified collection: market_data_reports
+2026-06-06 19:01:17.762 | chroma_client | DEBUG    | Verified collection: consumer_psychology
+2026-06-06 19:01:17.762 | chroma_client | DEBUG    | Verified collection: books_annotations
+2026-06-06 19:01:17.763 | chroma_client | DEBUG    | Verified collection: social_intelligence
+2026-06-06 19:01:17.763 | chroma_client | DEBUG    | Verified collection: startup_context
+2026-06-06 19:01:17.846 | reasoning_engine | INFO     | Executing Reasoning Engine (Gemini 2.5 Flash)...
+2026-06-06 19:01:17.847 | reasoning_engine | ERROR    | Reasoning engine failed: 429 RESOURCE_EXHAUSTED: Rate limit
+2026-06-06 19:01:17.847 | embedder | INFO     | Loading multilingual embedding model: intfloat/multilingual-e5-large
+2026-06-06 19:01:43.155 | embedder | INFO     | Embedded batch of 10 items using intfloat/multilingual-e5-large in 25.306s
+2026-06-06 19:01:43.163 | retriever | DEBUG    | Retriever error on collection founders_mindsets: ChromaDB offline
+2026-06-06 19:01:43.164 | retriever | DEBUG    | Retriever error on collection cmo_profiles: ChromaDB offline
+2026-06-06 19:01:43.163 | retriever | DEBUG    | Retriever error on collection campaign_case_studies: ChromaDB offline
+2026-06-06 19:01:43.164 | retriever | DEBUG    | Retriever error on collection books_annotations: ChromaDB offline
+2026-06-06 19:01:43.164 | retriever | DEBUG    | Retriever error on collection social_intelligence: ChromaDB offline
+2026-06-06 19:01:43.165 | retriever | DEBUG    | Retriever error on collection campaign_case_studies: ChromaDB offline
+2026-06-06 19:01:43.165 | retriever | DEBUG    | Retriever error on collection market_data_reports: ChromaDB offline
+2026-06-06 19:01:43.165 | retriever | DEBUG    | Retriever error on collection startup_context: ChromaDB offline
+2026-06-06 19:01:43.165 | retriever | DEBUG    | Retriever error on collection consumer_psychology: ChromaDB offline
+2026-06-06 19:01:43.165 | retriever | DEBUG    | Retriever error on collection books_annotations: ChromaDB offline
+2026-06-06 19:01:43.165 | retriever | DEBUG    | Retriever error on collection market_data_reports: ChromaDB offline
+2026-06-06 19:01:43.165 | retriever | DEBUG    | Retriever error on collection consumer_psychology: ChromaDB offline
+2026-06-06 19:01:43.166 | retriever | DEBUG    | Retriever error on collection founders_mindsets: ChromaDB offline
+2026-06-06 19:01:43.166 | retriever | DEBUG    | Retriever error on collection cmo_profiles: ChromaDB offline
+2026-06-06 19:01:43.166 | retriever | DEBUG    | Retriever error on collection startup_context: ChromaDB offline
+2026-06-06 19:01:43.166 | retriever | DEBUG    | Retriever error on collection founders_mindsets: ChromaDB offline
+2026-06-06 19:01:43.166 | retriever | DEBUG    | Retriever error on collection campaign_case_studies: ChromaDB offline
+2026-06-06 19:01:43.165 | retriever | DEBUG    | Retriever error on collection cmo_profiles: ChromaDB offline
+2026-06-06 19:01:43.166 | retriever | DEBUG    | Retriever error on collection social_intelligence: ChromaDB offline
+2026-06-06 19:01:43.166 | retriever | DEBUG    | Retriever error on collection consumer_psychology: ChromaDB offline
+2026-06-06 19:01:43.167 | retriever | DEBUG    | Retriever error on collection cmo_profiles: ChromaDB offline
+2026-06-06 19:01:43.167 | retriever | DEBUG    | Retriever error on collection campaign_case_studies: ChromaDB offline
+2026-06-06 19:01:43.167 | retriever | DEBUG    | Retriever error on collection market_data_reports: ChromaDB offline
+2026-06-06 19:01:43.167 | retriever | DEBUG    | Retriever error on collection social_intelligence: ChromaDB offline
+2026-06-06 19:01:43.167 | retriever | DEBUG    | Retriever error on collection founders_mindsets: ChromaDB offline
+2026-06-06 19:01:43.167 | retriever | DEBUG    | Retriever error on collection books_annotations: ChromaDB offline
+2026-06-06 19:01:43.167 | retriever | DEBUG    | Retriever error on collection market_data_reports: ChromaDB offline
+2026-06-06 19:01:43.167 | retriever | DEBUG    | Retriever error on collection cmo_profiles: ChromaDB offline
+2026-06-06 19:01:43.168 | retriever | DEBUG    | Retriever error on collection social_intelligence: ChromaDB offline
+2026-06-06 19:01:43.168 | retriever | DEBUG    | Retriever error on collection consumer_psychology: ChromaDB offline
+2026-06-06 19:01:43.168 | retriever | DEBUG    | Retriever error on collection founders_mindsets: ChromaDB offline
+2026-06-06 19:01:43.168 | retriever | DEBUG    | Retriever error on collection books_annotations: ChromaDB offline
+2026-06-06 19:01:43.168 | retriever | DEBUG    | Retriever error on collection founders_mindsets: ChromaDB offline
+2026-06-06 19:01:43.168 | retriever | DEBUG    | Retriever error on collection books_annotations: ChromaDB offline
+2026-06-06 19:01:43.168 | retriever | DEBUG    | Retriever error on collection startup_context: ChromaDB offline
+2026-06-06 19:01:43.167 | retriever | DEBUG    | Retriever error on collection campaign_case_studies: ChromaDB offline
+2026-06-06 19:01:43.168 | retriever | DEBUG    | Retriever error on collection market_data_reports: ChromaDB offline
+2026-06-06 19:01:43.168 | retriever | DEBUG    | Retriever error on collection social_intelligence: ChromaDB offline
+2026-06-06 19:01:43.167 | retriever | DEBUG    | Retriever error on collection startup_context: ChromaDB offline
+2026-06-06 19:01:43.169 | retriever | DEBUG    | Retriever error on collection startup_context: ChromaDB offline
+2026-06-06 19:01:43.169 | retriever | DEBUG    | Retriever error on collection campaign_case_studies: ChromaDB offline
+2026-06-06 19:01:43.169 | retriever | DEBUG    | Retriever error on collection cmo_profiles: ChromaDB offline
+2026-06-06 19:01:43.170 | retriever | DEBUG    | Retriever error on collection market_data_reports: ChromaDB offline
+2026-06-06 19:01:43.170 | retriever | DEBUG    | Retriever error on collection consumer_psychology: ChromaDB offline
+2026-06-06 19:01:43.170 | retriever | DEBUG    | Retriever error on collection books_annotations: ChromaDB offline
+2026-06-06 19:01:43.170 | retriever | DEBUG    | Retriever error on collection social_intelligence: ChromaDB offline
+2026-06-06 19:01:43.170 | retriever | DEBUG    | Retriever error on collection startup_context: ChromaDB offline
+2026-06-06 19:01:43.170 | retriever | DEBUG    | Retriever error on collection founders_mindsets: ChromaDB offline
+2026-06-06 19:01:43.170 | retriever | DEBUG    | Retriever error on collection campaign_case_studies: ChromaDB offline
+2026-06-06 19:01:43.170 | retriever | DEBUG    | Retriever error on collection cmo_profiles: ChromaDB offline
+2026-06-06 19:01:43.170 | retriever | DEBUG    | Retriever error on collection market_data_reports: ChromaDB offline
+2026-06-06 19:01:43.170 | retriever | DEBUG    | Retriever error on collection consumer_psychology: ChromaDB offline
+2026-06-06 19:01:43.170 | retriever | DEBUG    | Retriever error on collection books_annotations: ChromaDB offline
+2026-06-06 19:01:43.170 | retriever | DEBUG    | Retriever error on collection social_intelligence: ChromaDB offline
+2026-06-06 19:01:43.170 | retriever | DEBUG    | Retriever error on collection startup_context: ChromaDB offline
+2026-06-06 19:01:43.170 | retriever | DEBUG    | Retriever error on collection founders_mindsets: ChromaDB offline
+2026-06-06 19:01:43.170 | retriever | DEBUG    | Retriever error on collection campaign_case_studies: ChromaDB offline
+2026-06-06 19:01:43.170 | retriever | DEBUG    | Retriever error on collection cmo_profiles: ChromaDB offline
+2026-06-06 19:01:43.170 | retriever | DEBUG    | Retriever error on collection market_data_reports: ChromaDB offline
+2026-06-06 19:01:43.171 | retriever | DEBUG    | Retriever error on collection consumer_psychology: ChromaDB offline
+2026-06-06 19:01:43.171 | retriever | DEBUG    | Retriever error on collection books_annotations: ChromaDB offline
+2026-06-06 19:01:43.171 | retriever | DEBUG    | Retriever error on collection social_intelligence: ChromaDB offline
+2026-06-06 19:01:43.171 | retriever | DEBUG    | Retriever error on collection startup_context: ChromaDB offline
+2026-06-06 19:01:43.171 | retriever | DEBUG    | Retriever error on collection founders_mindsets: ChromaDB offline
+2026-06-06 19:01:43.171 | retriever | DEBUG    | Retriever error on collection campaign_case_studies: ChromaDB offline
+2026-06-06 19:01:43.171 | retriever | DEBUG    | Retriever error on collection cmo_profiles: ChromaDB offline
+2026-06-06 19:01:43.171 | retriever | DEBUG    | Retriever error on collection market_data_reports: ChromaDB offline
+2026-06-06 19:01:43.171 | retriever | DEBUG    | Retriever error on collection consumer_psychology: ChromaDB offline
+2026-06-06 19:01:43.171 | retriever | DEBUG    | Retriever error on collection books_annotations: ChromaDB offline
+2026-06-06 19:01:43.171 | retriever | DEBUG    | Retriever error on collection social_intelligence: ChromaDB offline
+2026-06-06 19:01:43.171 | retriever | DEBUG    | Retriever error on collection startup_context: ChromaDB offline
+2026-06-06 19:01:43.171 | retriever | DEBUG    | Retriever error on collection books_annotations: ChromaDB offline
+2026-06-06 19:01:43.171 | retriever | DEBUG    | Retriever error on collection founders_mindsets: ChromaDB offline
+2026-06-06 19:01:43.171 | retriever | DEBUG    | Retriever error on collection market_data_reports: ChromaDB offline
+2026-06-06 19:01:43.172 | retriever | DEBUG    | Retriever error on collection startup_context: ChromaDB offline
+2026-06-06 19:01:43.172 | retriever | DEBUG    | Retriever error on collection cmo_profiles: ChromaDB offline
+2026-06-06 19:01:43.172 | retriever | DEBUG    | Retriever error on collection consumer_psychology: ChromaDB offline
+2026-06-06 19:01:43.172 | retriever | DEBUG    | Retriever error on collection consumer_psychology: ChromaDB offline
+2026-06-06 19:01:43.172 | retriever | DEBUG    | Retriever error on collection campaign_case_studies: ChromaDB offline
+2026-06-06 19:01:43.172 | retriever | DEBUG    | Retriever error on collection social_intelligence: ChromaDB offline
+2026-06-06 19:01:43.173 | retriever | INFO     | Retrieved 0 unique chunks from 10 sub-queries.
+2026-06-06 19:01:43.569 | query_decomposer | DEBUG    | Keyword decomposition took 0.0000s
+2026-06-06 19:01:43.569 | query_decomposer | INFO     | Query decomposition (COMPLEX) generated 4 sub-queries.
+2026-06-06 19:01:43.569 | query_decomposer | INFO     | Decomposition cost: $0.00 (Local Keyword-based)
+2026-06-06 19:01:43.569 | context_builder | INFO     | Built context package: 0/0 chunks, 34 estimated tokens.
+2026-06-06 19:01:43.584 | decision_tracker | INFO     | Auto-extracted decision from response.

@@ -1,0 +1,2 @@
+2026-06-06 19:01:17.847 | embedder | INFO     | Loading multilingual embedding model: intfloat/multilingual-e5-large
+2026-06-06 19:01:43.155 | embedder | INFO     | Embedded batch of 10 items using intfloat/multilingual-e5-large in 25.306s

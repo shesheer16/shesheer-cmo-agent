@@ -1,0 +1,27 @@
+2026-06-05 23:41:48.120 | chroma_client | INFO     | Initialized ChromaDB PersistentClient at ./data/chromadb
+2026-06-05 23:41:48.127 | chroma_client | DEBUG    | Verified collection: founders_mindsets
+2026-06-05 23:41:48.128 | chroma_client | DEBUG    | Verified collection: campaign_case_studies
+2026-06-05 23:41:48.128 | chroma_client | DEBUG    | Verified collection: cmo_profiles
+2026-06-05 23:41:48.128 | chroma_client | DEBUG    | Verified collection: market_data_reports
+2026-06-05 23:41:48.129 | chroma_client | DEBUG    | Verified collection: consumer_psychology
+2026-06-05 23:41:48.129 | chroma_client | DEBUG    | Verified collection: books_annotations
+2026-06-05 23:41:48.129 | chroma_client | DEBUG    | Verified collection: social_intelligence
+2026-06-05 23:41:48.130 | chroma_client | DEBUG    | Verified collection: startup_context
+2026-06-05 23:44:31.318 | chroma_client | INFO     | Initialized ChromaDB PersistentClient at ./data/chromadb
+2026-06-05 23:44:31.329 | chroma_client | DEBUG    | Verified collection: founders_mindsets
+2026-06-05 23:44:31.329 | chroma_client | DEBUG    | Verified collection: campaign_case_studies
+2026-06-05 23:44:31.330 | chroma_client | DEBUG    | Verified collection: cmo_profiles
+2026-06-05 23:44:31.330 | chroma_client | DEBUG    | Verified collection: market_data_reports
+2026-06-05 23:44:31.330 | chroma_client | DEBUG    | Verified collection: consumer_psychology
+2026-06-05 23:44:31.331 | chroma_client | DEBUG    | Verified collection: books_annotations
+2026-06-05 23:44:31.331 | chroma_client | DEBUG    | Verified collection: social_intelligence
+2026-06-05 23:44:31.331 | chroma_client | DEBUG    | Verified collection: startup_context
+2026-06-05 23:52:01.672 | chroma_client | INFO     | Initialized ChromaDB PersistentClient at ./data/chromadb
+2026-06-05 23:52:01.680 | chroma_client | DEBUG    | Verified collection: founders_mindsets
+2026-06-05 23:52:01.680 | chroma_client | DEBUG    | Verified collection: campaign_case_studies
+2026-06-05 23:52:01.681 | chroma_client | DEBUG    | Verified collection: cmo_profiles
+2026-06-05 23:52:01.681 | chroma_client | DEBUG    | Verified collection: market_data_reports
+2026-06-05 23:52:01.681 | chroma_client | DEBUG    | Verified collection: consumer_psychology
+2026-06-05 23:52:01.682 | chroma_client | DEBUG    | Verified collection: books_annotations
+2026-06-05 23:52:01.682 | chroma_client | DEBUG    | Verified collection: social_intelligence
+2026-06-05 23:52:01.682 | chroma_client | DEBUG    | Verified collection: startup_context
