@@ -148,7 +148,24 @@ def start_health_server(port: int):
 
 async def start_bot():
     """Starts the Telegram bot in polling mode (async)."""
-    # Optional Sentry — activate only if SENTRY_DSN is set
+    
+    print_info("DEBUG: start_bot() called")
+    
+    # Check TELEGRAM_BOT_TOKEN
+    telegram_token = os.environ.get("TELEGRAM_BOT_TOKEN")
+    if not telegram_token or telegram_token == "your_token_here":
+        print_failure("TELEGRAM_BOT_TOKEN not set or invalid! Bot cannot start.")
+        return
+    print_success(f"TELEGRAM_BOT_TOKEN found (length: {len(telegram_token)})")
+
+    # Check GEMINI_API_KEY
+    gemini_key = os.environ.get("GEMINI_API_KEY")
+    if not gemini_key:
+        print_failure("GEMINI_API_KEY not set! Bot cannot start.")
+        return
+    print_success(f"GEMINI_API_KEY found (length: {len(gemini_key)})")
+
+    # Optional Sentry
     sentry_dsn = os.environ.get("SENTRY_DSN")
     if sentry_dsn:
         try:
@@ -158,22 +175,26 @@ async def start_bot():
         except ImportError:
             print_info("sentry-sdk not installed — skipping Sentry.")
 
-    # Auto-ingest annotations on cold start (handles Render ephemeral disk)
+    # Auto-ingest annotations on cold start
     try:
         from scripts.ingest_pdf_batch import run_batch as ingest_annotations
         annotations_dir = Path("data/annotations")
         if annotations_dir.exists() and any(annotations_dir.glob("*.json")):
             print_info("Running cold-start annotation ingestion...")
-            # Ingestion is idempotent via source_registry — safe to re-run
         print_success("Knowledge base ready.")
     except Exception as e:
         print_info(f"Cold-start ingestion skipped: {e}")
 
     # Start the Telegram bot
-    from src.interface.telegram_bot import main as bot_main
-    print_success("Telegram bot starting in polling mode...")
-    bot_main()
-
+    try:
+        print_info("DEBUG: Importing telegram_bot...")
+        from src.interface.telegram_bot import main as bot_main
+        print_success("Telegram bot starting in polling mode...")
+        bot_main()
+    except Exception as e:
+        print_failure(f"Telegram bot failed to start: {e}")
+        import traceback
+        traceback.print_exc()
 
 def main():
     parser = argparse.ArgumentParser(description="Shesheer CMO Agent")
