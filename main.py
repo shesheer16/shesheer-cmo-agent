@@ -5,6 +5,9 @@ import asyncio
 import threading
 import sqlite3
 from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv()
 
 class Colors:
     GREEN = '\033[92m'
@@ -146,8 +149,8 @@ def start_health_server(port: int):
     server.run()
 
 
-async def start_bot():
-    """Starts the Telegram bot in polling mode (async)."""
+def start_bot():
+    """Starts the Telegram bot in polling mode."""
     
     print_info("DEBUG: start_bot() called")
     
@@ -245,7 +248,7 @@ def main():
         print_success(f"Health server running at http://0.0.0.0:{args.port}/health")
 
         # Bot runs in main thread's event loop
-        asyncio.run(start_bot())
+        start_bot()
 
     elif args.ui:
         print_info("Launch Streamlit UI with: uv run streamlit run streamlit_app.py")

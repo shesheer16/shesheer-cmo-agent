@@ -6,7 +6,7 @@ from pathlib import Path
 from telegram import Update, File
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
 from faster_whisper import WhisperModel
-import google.api_core.exceptions as google_exceptions
+from google.genai import errors as genai_errors
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from datetime import datetime, timedelta
 
@@ -72,8 +72,12 @@ async def process_message(user_message: str, update: Update):
             for chunk in chunks:
                 await update.message.reply_text(chunk, parse_mode="Markdown")
                 
-    except google_exceptions.ResourceExhausted:
-        await update.message.reply_text("API limit hit, retry in 30 seconds")
+    except genai_errors.APIError as e:
+        if e.code == 429:
+            await update.message.reply_text("API limit hit, retry in 30 seconds")
+        else:
+            logger.error(f"GenAI API Error: {e}")
+            await update.message.reply_text("Processing error. Try again.")
     except Exception as e:
         logger.error(f"Error in text_handler: {e}")
         await update.message.reply_text("Processing error. Try again.")
@@ -179,7 +183,7 @@ async def outcome_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
     except Exception as e:
         await update.message.reply_text(f"Failed to log outcome: {e}")
 
-async def poll_decisions(bot):
+async def poll_decisions(context: ContextTypes.DEFAULT_TYPE):
     """Daily check for 14-day old decisions."""
     try:
         pending = context_manager.get_pending_decisions()
@@ -188,7 +192,7 @@ async def poll_decisions(bot):
         # For simplicity, we just send a static reminder about the oldest pending one.
         if pending:
             oldest = pending[0]
-            await bot.send_message(
+            await context.bot.send_message(
                 chat_id=TELEGRAM_ALLOWED_USER_ID,
                 text=f"⏰ Follow-up time! Two weeks ago you were advised to:\n{oldest['recommendation']}\n\nDid you take this move? Reply with `/outcome {oldest['id']} <worked/failed/partial> <notes>`"
             )
@@ -215,10 +219,10 @@ def main():
 
     application = Application.builder().token(TELEGRAM_BOT_TOKEN).build()
     
-    # Scheduler
-    scheduler = AsyncIOScheduler()
-    scheduler.add_job(poll_decisions, 'cron', hour=9, args=[application.bot])
-    scheduler.start()
+    # Scheduler via JobQueue
+    import datetime
+    t = datetime.time(hour=9, minute=0, second=0)
+    application.job_queue.run_daily(poll_decisions, time=t)
 
     application.add_handler(CommandHandler("start", start_cmd))
     application.add_handler(CommandHandler("context", context_cmd))
