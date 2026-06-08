@@ -21,7 +21,7 @@ from scripts.ingest_pdf_batch import run_batch as ingest_pdf_batch
 TELEGRAM_ALLOWED_USER_ID = os.getenv("TELEGRAM_ALLOWED_USER_ID")
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 
-agent = CMOAgent()
+agent = None  # Initialized in main()
 
 # Initialize whisper model once
 whisper_model = None
@@ -199,6 +199,19 @@ def main():
     if not TELEGRAM_BOT_TOKEN or not TELEGRAM_ALLOWED_USER_ID:
         logger.error("Missing Telegram environment variables.")
         return
+
+    global agent
+    try:
+        agent = CMOAgent()  # ← Move here
+        logger.info("CMOAgent initialized successfully.")
+    except Exception as e:
+        logger.error(f"CMOAgent failed to initialize: {e}")
+        import traceback
+        traceback.print_exc()
+        return
+
+    application = Application.builder().token(TELEGRAM_BOT_TOKEN).build()
+    # ... rest of main()
 
     application = Application.builder().token(TELEGRAM_BOT_TOKEN).build()
     
