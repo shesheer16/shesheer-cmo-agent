@@ -200,40 +200,43 @@ async def poll_decisions(context: ContextTypes.DEFAULT_TYPE):
         logger.error(f"Error polling decisions: {e}")
 
 def main():
+    logger.info("DEBUG: telegram_bot.main() called")
+    
     if not TELEGRAM_BOT_TOKEN or not TELEGRAM_ALLOWED_USER_ID:
-        logger.error("Missing Telegram environment variables.")
+        logger.error("Missing Telegram environment variables. TELEGRAM_BOT_TOKEN or TELEGRAM_ALLOWED_USER_ID not set.")
         return
 
-    global agent
+    logger.info("DEBUG: Environment vars OK, creating Application...")
+    
     try:
-        agent = CMOAgent()  # ← Move here
-        logger.info("CMOAgent initialized successfully.")
+        application = Application.builder().token(TELEGRAM_BOT_TOKEN).build()
+        logger.info("DEBUG: Application created successfully")
+        
+        # Scheduler via JobQueue
+        import datetime
+        t = datetime.time(hour=9, minute=0, second=0)
+        application.job_queue.run_daily(poll_decisions, time=t)
+        logger.info("DEBUG: Scheduler configured for daily 9 AM decision polls")
+
+        logger.info("DEBUG: Adding command handlers...")
+        application.add_handler(CommandHandler("start", start_cmd))
+        application.add_handler(CommandHandler("context", context_cmd))
+        application.add_handler(CommandHandler("decisions", decisions_cmd))
+        application.add_handler(CommandHandler("outcome", outcome_cmd))
+        
+        logger.info("DEBUG: Adding message handlers...")
+        application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, text_handler))
+        application.add_handler(MessageHandler(filters.VOICE, voice_handler))
+        application.add_handler(MessageHandler(filters.Document.PDF, document_handler))
+
+        logger.info("✓ Telegram Bot started. Polling for updates...")
+        application.run_polling(allowed_updates=Update.ALL_TYPES)
+        
     except Exception as e:
-        logger.error(f"CMOAgent failed to initialize: {e}")
+        logger.error(f"Telegram bot failed during setup/polling: {e}")
         import traceback
         traceback.print_exc()
         return
-
-    application = Application.builder().token(TELEGRAM_BOT_TOKEN).build()
-    # ... rest of main()
-
-    application = Application.builder().token(TELEGRAM_BOT_TOKEN).build()
-    
-    # Scheduler via JobQueue
-    import datetime
-    t = datetime.time(hour=9, minute=0, second=0)
-    application.job_queue.run_daily(poll_decisions, time=t)
-
-    application.add_handler(CommandHandler("start", start_cmd))
-    application.add_handler(CommandHandler("context", context_cmd))
-    application.add_handler(CommandHandler("decisions", decisions_cmd))
-    application.add_handler(CommandHandler("outcome", outcome_cmd))
-    application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, text_handler))
-    application.add_handler(MessageHandler(filters.VOICE, voice_handler))
-    application.add_handler(MessageHandler(filters.Document.PDF, document_handler))
-
-    logger.info("Telegram Bot started.")
-    application.run_polling(allowed_updates=Update.ALL_TYPES)
 
 if __name__ == "__main__":
     main()
