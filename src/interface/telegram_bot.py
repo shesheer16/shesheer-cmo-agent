@@ -7,7 +7,7 @@ from telegram import Update, File
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
 from faster_whisper import WhisperModel
 from google.genai import errors as genai_errors
-from apscheduler.schedulers.asyncio import AsyncIOScheduler
+
 from datetime import datetime, timedelta
 
 from src.core.orchestrator import CMOAgent
