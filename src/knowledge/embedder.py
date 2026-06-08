@@ -1,83 +1,77 @@
 import time
-from typing import List
-from sentence_transformers import SentenceTransformer
-from langdetect import detect, DetectorFactory
+import google.genai as genai
+from src.config import settings
 from src.utils.logger import logger
 
-# Ensure consistent language detection
-DetectorFactory.seed = 0
-
 class Embedder:
-    _instance = None
-    
-    def __new__(cls):
-        if cls._instance is None:
-            cls._instance = super(Embedder, cls).__new__(cls)
-            cls._instance.en_model = None
-            cls._instance.multi_model = None
-        return cls._instance
+    def __init__(self):
+        """Initialize Gemini text-embedding-004 API client."""
+        logger.info("Initializing Gemini Embeddings (text-embedding-004)...")
+        
+        if not settings.gemini_api_key or settings.gemini_api_key == "your_key_here":
+            raise ValueError("GEMINI_API_KEY not configured")
+        
+        genai.configure(api_key=settings.gemini_api_key)
+        self.model = "text-embedding-004"
+        self.rate_limit_delay = 0.5  # 500ms between requests
+        self.last_request_time = 0
+        
+        logger.info("✓ Gemini Embeddings ready (text-embedding-004)")
 
-    def _load_en_model(self):
-        if self.en_model is None:
-            logger.info("Loading English embedding model: all-MiniLM-L6-v2")
-            self.en_model = SentenceTransformer("all-MiniLM-L6-v2")
-        return self.en_model
+    def _respect_rate_limit(self):
+        """Enforce rate limiting (60 RPM = 1 per second max)."""
+        elapsed = time.time() - self.last_request_time
+        if elapsed < self.rate_limit_delay:
+            time.sleep(self.rate_limit_delay - elapsed)
+        self.last_request_time = time.time()
 
-    def _load_multi_model(self):
-        if self.multi_model is None:
-            logger.info("Loading multilingual embedding model: intfloat/multilingual-e5-large")
-            self.multi_model = SentenceTransformer("intfloat/multilingual-e5-large")
-        return self.multi_model
-
-    def detect_language(self, text: str) -> str:
+    def embed(self, text: str) -> list:
+        """Embed a single text string using Gemini API."""
         try:
-            return detect(text)
+            self._respect_rate_limit()
+            
+            result = genai.embed_content(
+                model=self.model,
+                content=text
+            )
+            
+            embedding = result['embedding']
+            return embedding
+            
         except Exception as e:
-            logger.warning(f"Language detection failed, defaulting to 'en'. Error: {e}")
-            return "en"
-
-    def embed(self, text: str) -> List[float]:
-        """Embeds a single string."""
-        return self.embed_batch([text])[0]
-
-    def embed_batch(self, texts: List[str]) -> List[List[float]]:
-        """Embeds a batch of strings, routing them based on the first text's language."""
-        if not texts:
+            logger.error(f"Gemini embedding error: {e}")
             return []
 
-        start_time = time.time()
+    def embed_batch(self, texts: list, batch_size: int = 10) -> list:
+        """
+        Embed multiple texts efficiently with batching and rate limiting.
         
-        # To fix the ChromaDB mixed-dimensionality crash, we standardize on 
-        # the highly capable multilingual-e5-large model for ALL content (1024 dimensions).
-        # This prevents the collection from receiving both 384D and 1024D vectors.
-        model = self._load_multi_model()
-        model_name = "intfloat/multilingual-e5-large"
+        Args:
+            texts: List of text strings to embed
+            batch_size: Number of texts to process per batch (default 10)
         
-        # E5 models generally require a 'passage: ' prefix for document embeddings
-        texts_to_embed = [f"passage: {t}" for t in texts]
-
-        # Convert to a standard Python list of floats
-        embeddings = model.encode(texts_to_embed, convert_to_numpy=True).tolist()
+        Returns:
+            List of embeddings
+        """
+        embeddings = []
         
-        elapsed = time.time() - start_time
-        logger.info(f"Embedded batch of {len(texts)} items using {model_name} in {elapsed:.3f}s")
+        for i in range(0, len(texts), batch_size):
+            batch = texts[i:i+batch_size]
+            
+            for text in batch:
+                try:
+                    embedding = self.embed(text)
+                    embeddings.append(embedding)
+                except Exception as e:
+                    logger.error(f"Batch embedding failed for chunk {i}: {e}")
+                    embeddings.append([])
+            
+            # Log progress
+            if (i + batch_size) % 50 == 0:
+                logger.info(f"Embedded {min(i + batch_size, len(texts))}/{len(texts)} chunks")
         
+        logger.info(f"✓ Batch embedding complete: {len([e for e in embeddings if e])} successful")
         return embeddings
 
 # Singleton instance
 embedder = Embedder()
-
-def test_embedding():
-    logger.info("Starting embedding test...")
-    
-    en_text = "Physics Wallah disrupted the Indian edtech market with extreme affordability."
-    hi_text = "फिजिक्स वाला ने भारतीय एडटेक बाजार को सस्ती शिक्षा से बदल दिया।"
-    
-    en_vec = embedder.embed(en_text)
-    logger.info(f"English vector shape: {len(en_vec)} dimensions")
-    
-    hi_vec = embedder.embed(hi_text)
-    logger.info(f"Hindi vector shape: {len(hi_vec)} dimensions")
-
-if __name__ == "__main__":
-    test_embedding()
