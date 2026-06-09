@@ -206,7 +206,20 @@ def main():
         logger.error("Missing Telegram environment variables. TELEGRAM_BOT_TOKEN or TELEGRAM_ALLOWED_USER_ID not set.")
         return
 
-    logger.info("DEBUG: Environment vars OK, creating Application...")
+    logger.info("DEBUG: Environment vars OK, initializing CMOAgent...")
+    
+    # Initialize agent FIRST
+    global agent
+    try:
+        agent = CMOAgent()
+        logger.info("✓ CMOAgent initialized successfully")
+    except Exception as e:
+        logger.error(f"CMOAgent initialization failed: {e}")
+        import traceback
+        traceback.print_exc()
+        return
+
+    logger.info("DEBUG: Creating Telegram Application...")
     
     try:
         application = Application.builder().token(TELEGRAM_BOT_TOKEN).build()
