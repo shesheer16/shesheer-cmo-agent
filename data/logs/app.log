@@ -1,65 +1,47 @@
-2026-06-09 12:21:35.716 | embedder | INFO     | Initializing Gemini Embeddings (text-embedding-004)...
-2026-06-09 12:21:35.782 | embedder | INFO     | ✓ Gemini Embeddings ready (text-embedding-004)
-2026-06-09 12:21:36.281 | chroma_client | INFO     | Initialized ChromaDB PersistentClient at ./data/chromadb
-2026-06-09 12:21:36.288 | chroma_client | DEBUG    | Verified collection: founders_mindsets
-2026-06-09 12:21:36.289 | chroma_client | DEBUG    | Verified collection: campaign_case_studies
-2026-06-09 12:21:36.289 | chroma_client | DEBUG    | Verified collection: cmo_profiles
-2026-06-09 12:21:36.290 | chroma_client | DEBUG    | Verified collection: market_data_reports
-2026-06-09 12:21:36.290 | chroma_client | DEBUG    | Verified collection: consumer_psychology
-2026-06-09 12:21:36.290 | chroma_client | DEBUG    | Verified collection: books_annotations
-2026-06-09 12:21:36.291 | chroma_client | DEBUG    | Verified collection: social_intelligence
-2026-06-09 12:21:36.291 | chroma_client | DEBUG    | Verified collection: startup_context
-2026-06-09 12:21:36.530 | rag_pipeline | INFO     | Starting RAG Pipeline for query: Who are you
-2026-06-09 12:21:36.530 | rag_pipeline | DEBUG    | Step 'classify': 0.00s
-2026-06-09 12:21:36.530 | rag_pipeline | DEBUG    | Step 'decompose': 0.00s
-2026-06-09 12:21:36.530 | embedder | ERROR    | Gemini embedding error: Models.embed_content() got an unexpected keyword argument 'content'. Did you mean 'contents'?
-2026-06-09 12:21:37.036 | embedder | ERROR    | Gemini embedding error: Models.embed_content() got an unexpected keyword argument 'content'. Did you mean 'contents'?
-2026-06-09 12:21:37.036 | embedder | INFO     | ✓ Batch embedding complete
-2026-06-09 12:21:37.088 | retriever | DEBUG    | Query with filter failed on founders_mindsets, retrying without filter: list index out of range in query.
-2026-06-09 12:21:37.088 | retriever | DEBUG    | Retriever error on collection founders_mindsets: list index out of range in query.
-2026-06-09 12:21:37.094 | retriever | INFO     | Retrieved 0 unique chunks from 2 sub-queries.
-2026-06-09 12:21:37.094 | rag_pipeline | DEBUG    | Step 'retrieve': 0.56s
-2026-06-09 12:21:37.094 | rag_pipeline | DEBUG    | Step 'rerank': 0.00s
-2026-06-09 12:21:37.095 | context_builder | INFO     | Built context package: 0/0 chunks, 1953 estimated tokens.
-2026-06-09 12:21:37.095 | rag_pipeline | DEBUG    | Step 'build_context': 0.00s
-2026-06-09 12:21:37.095 | rag_pipeline | INFO     | RAG Pipeline completed in 0.56s
-2026-06-09 12:21:37.095 | reasoning_engine | INFO     | Executing Reasoning Engine (Gemini 2.5 Flash)...
-2026-06-09 12:27:36.694 | reasoning_engine | ERROR    | Reasoning engine failed: Cannot connect to host generativelanguage.googleapis.com:443 ssl:<ssl.SSLContext object at 0x10d228560> [nodename nor servname provided, or not known]
-2026-06-09 12:39:30.610 | embedder | INFO     | Initializing Gemini Embeddings (text-embedding-004)...
-2026-06-09 12:39:30.675 | embedder | INFO     | ✓ Gemini Embeddings ready (text-embedding-004)
-2026-06-09 12:39:31.080 | chroma_client | INFO     | Initialized ChromaDB PersistentClient at ./data/chromadb
-2026-06-09 12:39:31.088 | chroma_client | DEBUG    | Verified collection: founders_mindsets
-2026-06-09 12:39:31.089 | chroma_client | DEBUG    | Verified collection: campaign_case_studies
-2026-06-09 12:39:31.089 | chroma_client | DEBUG    | Verified collection: cmo_profiles
-2026-06-09 12:39:31.089 | chroma_client | DEBUG    | Verified collection: market_data_reports
-2026-06-09 12:39:31.090 | chroma_client | DEBUG    | Verified collection: consumer_psychology
-2026-06-09 12:39:31.090 | chroma_client | DEBUG    | Verified collection: books_annotations
-2026-06-09 12:39:31.090 | chroma_client | DEBUG    | Verified collection: social_intelligence
-2026-06-09 12:39:31.090 | chroma_client | DEBUG    | Verified collection: startup_context
-2026-06-09 12:39:31.351 | rag_pipeline | INFO     | Starting RAG Pipeline for query: Hello
-2026-06-09 12:39:31.351 | rag_pipeline | DEBUG    | Step 'classify': 0.00s
-2026-06-09 12:39:31.351 | rag_pipeline | DEBUG    | Step 'decompose': 0.00s
-2026-06-09 12:39:31.352 | embedder | ERROR    | Gemini embedding error: Models.embed_content() got an unexpected keyword argument 'content'. Did you mean 'contents'?
-2026-06-09 12:39:31.856 | embedder | ERROR    | Gemini embedding error: Models.embed_content() got an unexpected keyword argument 'content'. Did you mean 'contents'?
-2026-06-09 12:39:31.856 | embedder | INFO     | ✓ Batch embedding complete
-2026-06-09 12:39:31.903 | retriever | DEBUG    | Query with filter failed on founders_mindsets, retrying without filter: list index out of range in query.
-2026-06-09 12:39:31.904 | retriever | DEBUG    | Retriever error on collection founders_mindsets: list index out of range in query.
-2026-06-09 12:39:31.911 | retriever | INFO     | Retrieved 0 unique chunks from 2 sub-queries.
-2026-06-09 12:39:31.911 | rag_pipeline | DEBUG    | Step 'retrieve': 0.56s
-2026-06-09 12:39:31.911 | rag_pipeline | DEBUG    | Step 'rerank': 0.00s
-2026-06-09 12:39:31.911 | context_builder | INFO     | Built context package: 0/0 chunks, 1953 estimated tokens.
-2026-06-09 12:39:31.912 | rag_pipeline | DEBUG    | Step 'build_context': 0.00s
-2026-06-09 12:39:31.912 | rag_pipeline | INFO     | RAG Pipeline completed in 0.56s
-2026-06-09 12:39:31.912 | reasoning_engine | INFO     | Executing Reasoning Engine (Gemini 2.5 Flash)...
-2026-06-09 12:39:41.128 | reasoning_engine | ERROR    | Reasoning engine failed: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
-2026-06-09 23:46:38.024 | embedder | INFO     | Initializing Gemini Embeddings (text-embedding-004)...
-2026-06-09 23:46:38.088 | embedder | INFO     | ✓ Gemini Embeddings ready (text-embedding-004)
-2026-06-09 23:46:38.817 | chroma_client | INFO     | Initialized ChromaDB PersistentClient at ./data/chromadb
-2026-06-09 23:46:38.838 | chroma_client | DEBUG    | Verified collection: founders_mindsets
-2026-06-09 23:46:38.840 | chroma_client | DEBUG    | Verified collection: campaign_case_studies
-2026-06-09 23:46:38.840 | chroma_client | DEBUG    | Verified collection: cmo_profiles
-2026-06-09 23:46:38.841 | chroma_client | DEBUG    | Verified collection: market_data_reports
-2026-06-09 23:46:38.841 | chroma_client | DEBUG    | Verified collection: consumer_psychology
-2026-06-09 23:46:38.845 | chroma_client | DEBUG    | Verified collection: books_annotations
-2026-06-09 23:46:38.846 | chroma_client | DEBUG    | Verified collection: social_intelligence
-2026-06-09 23:46:38.846 | chroma_client | DEBUG    | Verified collection: startup_context
+2026-06-10 00:55:39.420 | embedder | INFO     | Initializing Gemini Embeddings (text-embedding-004)...
+2026-06-10 00:55:39.485 | embedder | INFO     | ✓ Gemini Embeddings ready (text-embedding-004)
+2026-06-10 00:55:39.941 | chroma_client | INFO     | Initialized ChromaDB PersistentClient at ./data/chromadb
+2026-06-10 00:55:39.951 | chroma_client | DEBUG    | Verified collection: founders_mindsets
+2026-06-10 00:55:39.951 | chroma_client | DEBUG    | Verified collection: campaign_case_studies
+2026-06-10 00:55:39.952 | chroma_client | DEBUG    | Verified collection: cmo_profiles
+2026-06-10 00:55:39.952 | chroma_client | DEBUG    | Verified collection: market_data_reports
+2026-06-10 00:55:39.952 | chroma_client | DEBUG    | Verified collection: consumer_psychology
+2026-06-10 00:55:39.952 | chroma_client | DEBUG    | Verified collection: books_annotations
+2026-06-10 00:55:39.953 | chroma_client | DEBUG    | Verified collection: social_intelligence
+2026-06-10 00:55:39.953 | chroma_client | DEBUG    | Verified collection: startup_context
+2026-06-10 00:55:40.044 | youtube_ingester | INFO     | Processing YouTube video: fWm_NKCtXdA
+2026-06-10 00:56:06.035 | youtube_ingester | INFO     | Video fWm_NKCtXdA processed. Method: api. Duration: 440s
+2026-06-10 00:56:06.039 | youtube_ingester | INFO     | Saved processed transcript to data/knowledge_base/youtube/fWm_NKCtXdA.json
+2026-06-10 00:56:06.043 | embedder | ERROR    | Gemini embedding error: Models.embed_content() got an unexpected keyword argument 'content'. Did you mean 'contents'?
+2026-06-10 00:56:06.102 | source_registry | DEBUG    | Chroma query failed during deduplication: list index out of range in query.
+2026-06-10 00:59:33.283 | embedder | INFO     | Initializing Gemini Embeddings (text-embedding-004)...
+2026-06-10 00:59:33.331 | embedder | INFO     | ✓ Gemini Embeddings ready (text-embedding-004)
+2026-06-10 00:59:33.776 | chroma_client | INFO     | Initialized ChromaDB PersistentClient at ./data/chromadb
+2026-06-10 00:59:33.785 | chroma_client | DEBUG    | Verified collection: founders_mindsets
+2026-06-10 00:59:33.786 | chroma_client | DEBUG    | Verified collection: campaign_case_studies
+2026-06-10 00:59:33.786 | chroma_client | DEBUG    | Verified collection: cmo_profiles
+2026-06-10 00:59:33.786 | chroma_client | DEBUG    | Verified collection: market_data_reports
+2026-06-10 00:59:33.786 | chroma_client | DEBUG    | Verified collection: consumer_psychology
+2026-06-10 00:59:33.787 | chroma_client | DEBUG    | Verified collection: books_annotations
+2026-06-10 00:59:33.787 | chroma_client | DEBUG    | Verified collection: social_intelligence
+2026-06-10 00:59:33.787 | chroma_client | DEBUG    | Verified collection: startup_context
+2026-06-10 00:59:33.878 | youtube_ingester | INFO     | Processing YouTube video: fWm_NKCtXdA
+2026-06-10 00:59:55.836 | youtube_ingester | INFO     | Video fWm_NKCtXdA processed. Method: api. Duration: 440s
+2026-06-10 00:59:55.839 | youtube_ingester | INFO     | Saved processed transcript to data/knowledge_base/youtube/fWm_NKCtXdA.json
+2026-06-10 00:59:57.192 | embedder | ERROR    | Gemini embedding error: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+2026-06-10 00:59:57.236 | source_registry | DEBUG    | Chroma query failed during deduplication: list index out of range in query.
+2026-06-10 01:23:32.685 | embedder | INFO     | Initializing Gemini Embeddings (text-embedding-004)...
+2026-06-10 01:23:32.735 | embedder | INFO     | ✓ Gemini Embeddings ready (text-embedding-004)
+2026-06-10 01:23:33.185 | chroma_client | INFO     | Initialized ChromaDB PersistentClient at ./data/chromadb
+2026-06-10 01:23:33.195 | chroma_client | DEBUG    | Verified collection: founders_mindsets
+2026-06-10 01:23:33.196 | chroma_client | DEBUG    | Verified collection: campaign_case_studies
+2026-06-10 01:23:33.196 | chroma_client | DEBUG    | Verified collection: cmo_profiles
+2026-06-10 01:23:33.196 | chroma_client | DEBUG    | Verified collection: market_data_reports
+2026-06-10 01:23:33.197 | chroma_client | DEBUG    | Verified collection: consumer_psychology
+2026-06-10 01:23:33.197 | chroma_client | DEBUG    | Verified collection: books_annotations
+2026-06-10 01:23:33.197 | chroma_client | DEBUG    | Verified collection: social_intelligence
+2026-06-10 01:23:33.198 | chroma_client | DEBUG    | Verified collection: startup_context
+2026-06-10 01:23:33.291 | youtube_ingester | INFO     | Processing YouTube video: fWm_NKCtXdA
+2026-06-10 01:23:44.172 | youtube_ingester | INFO     | Video fWm_NKCtXdA processed. Method: api. Duration: 440s
+2026-06-10 01:23:44.175 | youtube_ingester | INFO     | Saved processed transcript to data/knowledge_base/youtube/fWm_NKCtXdA.json
+2026-06-10 01:23:49.185 | source_registry | DEBUG    | Chroma query failed during deduplication: Collection expecting embedding with dimension of 1024, got 3072

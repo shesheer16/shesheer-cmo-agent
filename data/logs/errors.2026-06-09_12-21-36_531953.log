@@ -1,0 +1,6 @@
+2026-06-09 12:21:36.530 | embedder | ERROR    | Gemini embedding error: Models.embed_content() got an unexpected keyword argument 'content'. Did you mean 'contents'?
+2026-06-09 12:21:37.036 | embedder | ERROR    | Gemini embedding error: Models.embed_content() got an unexpected keyword argument 'content'. Did you mean 'contents'?
+2026-06-09 12:27:36.694 | reasoning_engine | ERROR    | Reasoning engine failed: Cannot connect to host generativelanguage.googleapis.com:443 ssl:<ssl.SSLContext object at 0x10d228560> [nodename nor servname provided, or not known]
+2026-06-09 12:39:31.352 | embedder | ERROR    | Gemini embedding error: Models.embed_content() got an unexpected keyword argument 'content'. Did you mean 'contents'?
+2026-06-09 12:39:31.856 | embedder | ERROR    | Gemini embedding error: Models.embed_content() got an unexpected keyword argument 'content'. Did you mean 'contents'?
+2026-06-09 12:39:41.128 | reasoning_engine | ERROR    | Reasoning engine failed: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
