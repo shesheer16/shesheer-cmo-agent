@@ -26,12 +26,12 @@ def run_batch():
     if not pdf_dir.exists():
         pdf_dir.mkdir(parents=True, exist_ok=True)
         console.print(f"[yellow]Created {pdf_dir}. Please place PDFs there and re-run.[/yellow]")
-        sys.exit(0)
+        return
 
     pdfs = list(pdf_dir.glob("*.pdf"))
     if not pdfs:
         console.print(f"[yellow]No PDFs found in {pdf_dir}.[/yellow]")
-        sys.exit(0)
+        return
 
     processor = PDFProcessor()
     total = len(pdfs)

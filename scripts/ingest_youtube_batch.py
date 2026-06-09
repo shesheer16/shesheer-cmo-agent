@@ -20,7 +20,7 @@ def run_batch():
     yaml_path = Path("data/sources/youtube_sources.yaml")
     if not yaml_path.exists():
         console.print(f"[red]Could not find {yaml_path}[/red]")
-        sys.exit(1)
+        return
         
     with open(yaml_path, "r") as f:
         data = yaml.safe_load(f)
@@ -28,7 +28,7 @@ def run_batch():
     sources_config = data.get("sources", [])
     if not sources_config:
         console.print("[yellow]No sources found in YAML.[/yellow]")
-        sys.exit(0)
+        return
         
     # Flatten videos
     all_videos = []
