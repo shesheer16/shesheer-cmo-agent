@@ -178,12 +178,18 @@ def start_bot():
         except ImportError:
             print_info("sentry-sdk not installed — skipping Sentry.")
 
-    # Auto-ingest annotations on cold start
+    # Auto-ingest all sources on cold start
     try:
-        from scripts.ingest_pdf_batch import run_batch as ingest_annotations
-        annotations_dir = Path("data/annotations")
-        if annotations_dir.exists() and any(annotations_dir.glob("*.json")):
-            print_info("Running cold-start annotation ingestion...")
+        print_info("Running cold-start ingestion...")
+        
+        # 1. Ingest PDFs
+        from scripts.ingest_pdf_batch import run_batch as ingest_pdfs
+        ingest_pdfs()
+        
+        # 2. Ingest YouTube sources
+        from scripts.ingest_youtube_batch import run_batch as ingest_youtube
+        ingest_youtube()
+        
         print_success("Knowledge base ready.")
     except Exception as e:
         print_info(f"Cold-start ingestion skipped: {e}")
