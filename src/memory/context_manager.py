@@ -2,8 +2,11 @@ import json
 from datetime import datetime, timedelta, timezone
 from typing import Dict, Any, List, Optional
 from sqlalchemy.orm import Session
-from src.memory.database import SessionLocal
 from src.memory.models import StartupContext, Conversation, DecisionsLog, PivotsLog, CostTracker
+from src.memory.database import SessionLocal, engine, Base
+
+# Create SQLite tables if they don't exist (crucial for Render ephemeral disk)
+Base.metadata.create_all(bind=engine)
 from src.utils.logger import logger
 
 class ConversationData:
