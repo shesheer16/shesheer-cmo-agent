@@ -1,43 +1,54 @@
-2026-06-08 13:41:23.586 | chroma_client | INFO     | Initialized ChromaDB PersistentClient at ./data/chromadb
-2026-06-08 13:41:23.596 | chroma_client | DEBUG    | Verified collection: founders_mindsets
-2026-06-08 13:41:23.596 | chroma_client | DEBUG    | Verified collection: campaign_case_studies
-2026-06-08 13:41:23.596 | chroma_client | DEBUG    | Verified collection: cmo_profiles
-2026-06-08 13:41:23.597 | chroma_client | DEBUG    | Verified collection: market_data_reports
-2026-06-08 13:41:23.597 | chroma_client | DEBUG    | Verified collection: consumer_psychology
-2026-06-08 13:41:23.597 | chroma_client | DEBUG    | Verified collection: books_annotations
-2026-06-08 13:41:23.598 | chroma_client | DEBUG    | Verified collection: social_intelligence
-2026-06-08 13:41:23.598 | chroma_client | DEBUG    | Verified collection: startup_context
-2026-06-08 13:41:24.960 | telegram_bot | INFO     | CMOAgent initialized successfully.
-2026-06-08 13:41:25.024 | telegram_bot | INFO     | Telegram Bot started.
-2026-06-08 13:43:07.776 | chroma_client | INFO     | Initialized ChromaDB PersistentClient at ./data/chromadb
-2026-06-08 13:43:07.786 | chroma_client | DEBUG    | Verified collection: founders_mindsets
-2026-06-08 13:43:07.787 | chroma_client | DEBUG    | Verified collection: campaign_case_studies
-2026-06-08 13:43:07.787 | chroma_client | DEBUG    | Verified collection: cmo_profiles
-2026-06-08 13:43:07.788 | chroma_client | DEBUG    | Verified collection: market_data_reports
-2026-06-08 13:43:07.788 | chroma_client | DEBUG    | Verified collection: consumer_psychology
-2026-06-08 13:43:07.788 | chroma_client | DEBUG    | Verified collection: books_annotations
-2026-06-08 13:43:07.788 | chroma_client | DEBUG    | Verified collection: social_intelligence
-2026-06-08 13:43:07.789 | chroma_client | DEBUG    | Verified collection: startup_context
-2026-06-08 13:43:08.954 | telegram_bot | INFO     | CMOAgent initialized successfully.
-2026-06-08 13:46:28.951 | chroma_client | INFO     | Initialized ChromaDB PersistentClient at ./data/chromadb
-2026-06-08 13:46:28.960 | chroma_client | DEBUG    | Verified collection: founders_mindsets
-2026-06-08 13:46:28.961 | chroma_client | DEBUG    | Verified collection: campaign_case_studies
-2026-06-08 13:46:28.961 | chroma_client | DEBUG    | Verified collection: cmo_profiles
-2026-06-08 13:46:28.962 | chroma_client | DEBUG    | Verified collection: market_data_reports
-2026-06-08 13:46:28.962 | chroma_client | DEBUG    | Verified collection: consumer_psychology
-2026-06-08 13:46:28.962 | chroma_client | DEBUG    | Verified collection: books_annotations
-2026-06-08 13:46:28.962 | chroma_client | DEBUG    | Verified collection: social_intelligence
-2026-06-08 13:46:28.963 | chroma_client | DEBUG    | Verified collection: startup_context
-2026-06-08 13:46:30.137 | telegram_bot | INFO     | CMOAgent initialized successfully.
-2026-06-08 13:46:30.196 | telegram_bot | INFO     | Telegram Bot started.
-2026-06-08 14:24:23.575 | chroma_client | INFO     | Initialized ChromaDB PersistentClient at ./data/chromadb
-2026-06-08 14:24:23.584 | chroma_client | DEBUG    | Verified collection: founders_mindsets
-2026-06-08 14:24:23.585 | chroma_client | DEBUG    | Verified collection: campaign_case_studies
-2026-06-08 14:24:23.585 | chroma_client | DEBUG    | Verified collection: cmo_profiles
-2026-06-08 14:24:23.585 | chroma_client | DEBUG    | Verified collection: market_data_reports
-2026-06-08 14:24:23.586 | chroma_client | DEBUG    | Verified collection: consumer_psychology
-2026-06-08 14:24:23.586 | chroma_client | DEBUG    | Verified collection: books_annotations
-2026-06-08 14:24:23.586 | chroma_client | DEBUG    | Verified collection: social_intelligence
-2026-06-08 14:24:23.587 | chroma_client | DEBUG    | Verified collection: startup_context
-2026-06-08 14:24:24.731 | telegram_bot | INFO     | CMOAgent initialized successfully.
-2026-06-08 14:24:24.796 | telegram_bot | INFO     | Telegram Bot started.
+2026-06-09 12:21:35.716 | embedder | INFO     | Initializing Gemini Embeddings (text-embedding-004)...
+2026-06-09 12:21:35.782 | embedder | INFO     | ✓ Gemini Embeddings ready (text-embedding-004)
+2026-06-09 12:21:36.281 | chroma_client | INFO     | Initialized ChromaDB PersistentClient at ./data/chromadb
+2026-06-09 12:21:36.288 | chroma_client | DEBUG    | Verified collection: founders_mindsets
+2026-06-09 12:21:36.289 | chroma_client | DEBUG    | Verified collection: campaign_case_studies
+2026-06-09 12:21:36.289 | chroma_client | DEBUG    | Verified collection: cmo_profiles
+2026-06-09 12:21:36.290 | chroma_client | DEBUG    | Verified collection: market_data_reports
+2026-06-09 12:21:36.290 | chroma_client | DEBUG    | Verified collection: consumer_psychology
+2026-06-09 12:21:36.290 | chroma_client | DEBUG    | Verified collection: books_annotations
+2026-06-09 12:21:36.291 | chroma_client | DEBUG    | Verified collection: social_intelligence
+2026-06-09 12:21:36.291 | chroma_client | DEBUG    | Verified collection: startup_context
+2026-06-09 12:21:36.530 | rag_pipeline | INFO     | Starting RAG Pipeline for query: Who are you
+2026-06-09 12:21:36.530 | rag_pipeline | DEBUG    | Step 'classify': 0.00s
+2026-06-09 12:21:36.530 | rag_pipeline | DEBUG    | Step 'decompose': 0.00s
+2026-06-09 12:21:36.530 | embedder | ERROR    | Gemini embedding error: Models.embed_content() got an unexpected keyword argument 'content'. Did you mean 'contents'?
+2026-06-09 12:21:37.036 | embedder | ERROR    | Gemini embedding error: Models.embed_content() got an unexpected keyword argument 'content'. Did you mean 'contents'?
+2026-06-09 12:21:37.036 | embedder | INFO     | ✓ Batch embedding complete
+2026-06-09 12:21:37.088 | retriever | DEBUG    | Query with filter failed on founders_mindsets, retrying without filter: list index out of range in query.
+2026-06-09 12:21:37.088 | retriever | DEBUG    | Retriever error on collection founders_mindsets: list index out of range in query.
+2026-06-09 12:21:37.094 | retriever | INFO     | Retrieved 0 unique chunks from 2 sub-queries.
+2026-06-09 12:21:37.094 | rag_pipeline | DEBUG    | Step 'retrieve': 0.56s
+2026-06-09 12:21:37.094 | rag_pipeline | DEBUG    | Step 'rerank': 0.00s
+2026-06-09 12:21:37.095 | context_builder | INFO     | Built context package: 0/0 chunks, 1953 estimated tokens.
+2026-06-09 12:21:37.095 | rag_pipeline | DEBUG    | Step 'build_context': 0.00s
+2026-06-09 12:21:37.095 | rag_pipeline | INFO     | RAG Pipeline completed in 0.56s
+2026-06-09 12:21:37.095 | reasoning_engine | INFO     | Executing Reasoning Engine (Gemini 2.5 Flash)...
+2026-06-09 12:27:36.694 | reasoning_engine | ERROR    | Reasoning engine failed: Cannot connect to host generativelanguage.googleapis.com:443 ssl:<ssl.SSLContext object at 0x10d228560> [nodename nor servname provided, or not known]
+2026-06-09 12:39:30.610 | embedder | INFO     | Initializing Gemini Embeddings (text-embedding-004)...
+2026-06-09 12:39:30.675 | embedder | INFO     | ✓ Gemini Embeddings ready (text-embedding-004)
+2026-06-09 12:39:31.080 | chroma_client | INFO     | Initialized ChromaDB PersistentClient at ./data/chromadb
+2026-06-09 12:39:31.088 | chroma_client | DEBUG    | Verified collection: founders_mindsets
+2026-06-09 12:39:31.089 | chroma_client | DEBUG    | Verified collection: campaign_case_studies
+2026-06-09 12:39:31.089 | chroma_client | DEBUG    | Verified collection: cmo_profiles
+2026-06-09 12:39:31.089 | chroma_client | DEBUG    | Verified collection: market_data_reports
+2026-06-09 12:39:31.090 | chroma_client | DEBUG    | Verified collection: consumer_psychology
+2026-06-09 12:39:31.090 | chroma_client | DEBUG    | Verified collection: books_annotations
+2026-06-09 12:39:31.090 | chroma_client | DEBUG    | Verified collection: social_intelligence
+2026-06-09 12:39:31.090 | chroma_client | DEBUG    | Verified collection: startup_context
+2026-06-09 12:39:31.351 | rag_pipeline | INFO     | Starting RAG Pipeline for query: Hello
+2026-06-09 12:39:31.351 | rag_pipeline | DEBUG    | Step 'classify': 0.00s
+2026-06-09 12:39:31.351 | rag_pipeline | DEBUG    | Step 'decompose': 0.00s
+2026-06-09 12:39:31.352 | embedder | ERROR    | Gemini embedding error: Models.embed_content() got an unexpected keyword argument 'content'. Did you mean 'contents'?
+2026-06-09 12:39:31.856 | embedder | ERROR    | Gemini embedding error: Models.embed_content() got an unexpected keyword argument 'content'. Did you mean 'contents'?
+2026-06-09 12:39:31.856 | embedder | INFO     | ✓ Batch embedding complete
+2026-06-09 12:39:31.903 | retriever | DEBUG    | Query with filter failed on founders_mindsets, retrying without filter: list index out of range in query.
+2026-06-09 12:39:31.904 | retriever | DEBUG    | Retriever error on collection founders_mindsets: list index out of range in query.
+2026-06-09 12:39:31.911 | retriever | INFO     | Retrieved 0 unique chunks from 2 sub-queries.
+2026-06-09 12:39:31.911 | rag_pipeline | DEBUG    | Step 'retrieve': 0.56s
+2026-06-09 12:39:31.911 | rag_pipeline | DEBUG    | Step 'rerank': 0.00s
+2026-06-09 12:39:31.911 | context_builder | INFO     | Built context package: 0/0 chunks, 1953 estimated tokens.
+2026-06-09 12:39:31.912 | rag_pipeline | DEBUG    | Step 'build_context': 0.00s
+2026-06-09 12:39:31.912 | rag_pipeline | INFO     | RAG Pipeline completed in 0.56s
+2026-06-09 12:39:31.912 | reasoning_engine | INFO     | Executing Reasoning Engine (Gemini 2.5 Flash)...
+2026-06-09 12:39:41.128 | reasoning_engine | ERROR    | Reasoning engine failed: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}

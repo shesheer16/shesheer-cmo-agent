@@ -79,9 +79,11 @@ async def process_message(user_message: str, update: Update):
             logger.error(f"GenAI API Error: {e}")
             await update.message.reply_text("Processing error. Try again.")
     except Exception as e:
-        logger.error(f"Error in text_handler: {e}")
-        await update.message.reply_text("Processing error. Try again.")
-
+        logger.error(f"Error in process_message: {e}")
+        import traceback
+        logger.error(f"Traceback: {traceback.format_exc()}")
+        await update.message.reply_text(f"Processing error: {str(e)[:200]}")
+        
 async def voice_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not await security_check(update): return
     

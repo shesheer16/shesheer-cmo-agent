@@ -4,36 +4,13 @@ from typing import List
 class ResponseFormatter:
     
     @staticmethod
-    def format_for_telegram(response: str) -> List[str]:
+    def format_for_telegram(response: str) -> str:
         """
-        Converts markdown to Telegram-compatible formatting and splits into chunks 
-        if the response exceeds Telegram's 4096 character limit.
+        Converts markdown bold **text** to Telegram bold *text*.
         """
         # Convert markdown bold **text** to Telegram bold *text*
         telegram_text = re.sub(r'\*\*(.*?)\*\*', r'*\1*', response)
-        
-        MAX_LEN = 4096
-        if len(telegram_text) <= MAX_LEN:
-            return [telegram_text]
-            
-        # Split at section boundaries (double newline)
-        sections = telegram_text.split('\n\n')
-        chunks = []
-        current_chunk = ""
-        
-        for section in sections:
-            # If adding the section exceeds the limit
-            if len(current_chunk) + len(section) + 2 > MAX_LEN:
-                if current_chunk:
-                    chunks.append(current_chunk.strip())
-                current_chunk = section + "\n\n"
-            else:
-                current_chunk += section + "\n\n"
-                
-        if current_chunk.strip():
-            chunks.append(current_chunk.strip())
-            
-        return chunks
+        return telegram_text
 
     @staticmethod
     def format_for_streamlit(response: str) -> str:

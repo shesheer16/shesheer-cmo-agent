@@ -90,7 +90,7 @@ class CMOAgent:
         # 6. Save to memory
         conv_data = ConversationData(
             user_message=user_message,
-            agent_response=formatted_text,
+            agent_response=raw_response,
             sources=sources_used,
             tokens_used=total_tokens,
             cost_inr=cost_inr,

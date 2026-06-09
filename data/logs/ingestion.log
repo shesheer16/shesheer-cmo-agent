@@ -1,2 +1,12 @@
 2026-06-06 19:01:17.847 | embedder | INFO     | Loading multilingual embedding model: intfloat/multilingual-e5-large
 2026-06-06 19:01:43.155 | embedder | INFO     | Embedded batch of 10 items using intfloat/multilingual-e5-large in 25.306s
+2026-06-09 12:21:35.716 | embedder | INFO     | Initializing Gemini Embeddings (text-embedding-004)...
+2026-06-09 12:21:35.782 | embedder | INFO     | ✓ Gemini Embeddings ready (text-embedding-004)
+2026-06-09 12:21:36.530 | embedder | ERROR    | Gemini embedding error: Models.embed_content() got an unexpected keyword argument 'content'. Did you mean 'contents'?
+2026-06-09 12:21:37.036 | embedder | ERROR    | Gemini embedding error: Models.embed_content() got an unexpected keyword argument 'content'. Did you mean 'contents'?
+2026-06-09 12:21:37.036 | embedder | INFO     | ✓ Batch embedding complete
+2026-06-09 12:39:30.610 | embedder | INFO     | Initializing Gemini Embeddings (text-embedding-004)...
+2026-06-09 12:39:30.675 | embedder | INFO     | ✓ Gemini Embeddings ready (text-embedding-004)
+2026-06-09 12:39:31.352 | embedder | ERROR    | Gemini embedding error: Models.embed_content() got an unexpected keyword argument 'content'. Did you mean 'contents'?
+2026-06-09 12:39:31.856 | embedder | ERROR    | Gemini embedding error: Models.embed_content() got an unexpected keyword argument 'content'. Did you mean 'contents'?
+2026-06-09 12:39:31.856 | embedder | INFO     | ✓ Batch embedding complete
