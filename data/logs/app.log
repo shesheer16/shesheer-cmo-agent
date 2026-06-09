@@ -52,3 +52,14 @@
 2026-06-09 12:39:31.912 | rag_pipeline | INFO     | RAG Pipeline completed in 0.56s
 2026-06-09 12:39:31.912 | reasoning_engine | INFO     | Executing Reasoning Engine (Gemini 2.5 Flash)...
 2026-06-09 12:39:41.128 | reasoning_engine | ERROR    | Reasoning engine failed: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+2026-06-09 23:46:38.024 | embedder | INFO     | Initializing Gemini Embeddings (text-embedding-004)...
+2026-06-09 23:46:38.088 | embedder | INFO     | ✓ Gemini Embeddings ready (text-embedding-004)
+2026-06-09 23:46:38.817 | chroma_client | INFO     | Initialized ChromaDB PersistentClient at ./data/chromadb
+2026-06-09 23:46:38.838 | chroma_client | DEBUG    | Verified collection: founders_mindsets
+2026-06-09 23:46:38.840 | chroma_client | DEBUG    | Verified collection: campaign_case_studies
+2026-06-09 23:46:38.840 | chroma_client | DEBUG    | Verified collection: cmo_profiles
+2026-06-09 23:46:38.841 | chroma_client | DEBUG    | Verified collection: market_data_reports
+2026-06-09 23:46:38.841 | chroma_client | DEBUG    | Verified collection: consumer_psychology
+2026-06-09 23:46:38.845 | chroma_client | DEBUG    | Verified collection: books_annotations
+2026-06-09 23:46:38.846 | chroma_client | DEBUG    | Verified collection: social_intelligence
+2026-06-09 23:46:38.846 | chroma_client | DEBUG    | Verified collection: startup_context
