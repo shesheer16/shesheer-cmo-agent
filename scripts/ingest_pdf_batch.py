@@ -88,6 +88,8 @@ def run_batch():
                 progress.console.print(f"[cyan]Embedding {len(chunks)} chunks into {collection_name}...[/cyan]")
                 for c in chunks:
                     vector = embedder.embed(c["text"])
+                    if not vector:
+                        continue
                     if source_registry.is_duplicate_chunk(collection_name, vector):
                         duplicate_chunks += 1
                         continue

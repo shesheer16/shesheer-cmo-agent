@@ -126,21 +126,23 @@ def run_batch():
                 
                 valid_chunks = 0
                 for c in chunks_to_embed:
+                    clean_meta = {}
+                    for k,v in c["metadata"].items():
+                        clean_meta[k] = json.dumps(v) if isinstance(v, (list, dict)) else v
+                        
                     vector = embedder.embed(c["text"])
-                    
-                    # Deduplication
+                    if not vector:
+                        console.print(f"[red]Failed to embed chunk {c['chunk_id']}. Skipping.[/red]")
+                        continue
+                        
                     if source_registry.is_duplicate_chunk(collection_name, vector):
                         duplicate_chunks += 1
                         continue
                         
-                    clean_meta = {}
-                    for k,v in c["metadata"].items():
-                        clean_meta[k] = json.dumps(v) if isinstance(v, (list, dict)) else v
-                            
                     coll.upsert(
                         ids=[c["chunk_id"]],
-                        documents=[c["text"]],
                         embeddings=[vector],
+                        documents=[c["text"]],
                         metadatas=[clean_meta]
                     )
                     valid_chunks += 1

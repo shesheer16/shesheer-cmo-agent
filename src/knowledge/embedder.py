@@ -12,7 +12,7 @@ class Embedder:
             raise ValueError("GEMINI_API_KEY not configured")
         
         self.client = genai.Client(api_key=settings.gemini_api_key)
-        self.model = "text-embedding-004"
+        self.model = "gemini-embedding-001"
         self.rate_limit_delay = 0.5
         self.last_request_time = 0
         
@@ -32,10 +32,11 @@ class Embedder:
             
             result = self.client.models.embed_content(
                 model=self.model,
-                content=text
+                contents=text
             )
             
-            embedding = result['embedding']
+            # EmbedContentResponse has an embeddings list, each has values
+            embedding = result.embeddings[0].values
             return embedding
             
         except Exception as e:
