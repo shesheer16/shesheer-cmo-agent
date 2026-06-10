@@ -179,20 +179,21 @@ def start_bot():
             print_info("sentry-sdk not installed — skipping Sentry.")
 
     # Auto-ingest all sources on cold start
-    try:
-        print_info("Running cold-start ingestion...")
-        
-        # 1. Ingest PDFs
-        from scripts.ingest_pdf_batch import run_batch as ingest_pdfs
-        ingest_pdfs()
-        
-        # 2. Ingest YouTube sources
-        from scripts.ingest_youtube_batch import run_batch as ingest_youtube
-        ingest_youtube()
-        
-        print_success("Knowledge base ready.")
-    except Exception as e:
-        print_info(f"Cold-start ingestion skipped: {e}")
+    # DISABLED: We now pre-build the DB and commit it to GitHub for instant startups
+    # try:
+    #     print_info("Running cold-start ingestion...")
+    #     
+    #     # 1. Ingest PDFs
+    #     from scripts.ingest_pdf_batch import run_batch as ingest_pdfs
+    #     ingest_pdfs()
+    #     
+    #     # 2. Ingest YouTube sources
+    #     from scripts.ingest_youtube_batch import run_batch as ingest_youtube
+    #     ingest_youtube()
+    #     
+    #     print_success("Knowledge base ready.")
+    # except Exception as e:
+    #     print_info(f"Cold-start ingestion skipped: {e}")
 
     # Start the Telegram bot
     try:

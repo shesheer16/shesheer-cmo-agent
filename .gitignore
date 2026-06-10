@@ -1,6 +1,4 @@
 .env
-data/chromadb/
-*.db
 __pycache__
 .venv
 audio_cache/
