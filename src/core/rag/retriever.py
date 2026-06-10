@@ -27,43 +27,28 @@ class Retriever:
 
     def _determine_collections(self, question: str) -> List[str]:
         q = question.lower()
+        cols = set(["startup_context", "founders_mindsets"]) # Always include base context and founders where our videos are
+
         if any(w in q for w in ["founder", "ceo", "people", "person", "leader"]):
-            return ["founders_mindsets", "cmo_profiles"]
+            cols.update(["cmo_profiles"])
         if any(w in q for w in ["campaign", "brand", "marketing", "ads"]):
-            return ["campaign_case_studies", "consumer_psychology"]
+            cols.update(["campaign_case_studies", "consumer_psychology"])
         if any(w in q for w in ["data", "market", "report", "growth", "revenue", "cagr"]):
-            return ["market_data_reports", "startup_context"]
+            cols.update(["market_data_reports"])
         if any(w in q for w in ["psychology", "trust", "behavior", "consumer"]):
-            return ["consumer_psychology", "campaign_case_studies"]
+            cols.update(["consumer_psychology", "campaign_case_studies"])
         if any(w in q for w in ["cmo", "officer", "strategy"]):
-            return ["cmo_profiles", "startup_context"]
+            cols.update(["cmo_profiles"])
         
-        # General strategy -> search all
-        return self.all_collections
+        return list(cols)
 
     def _build_where_filter(self, startup_context: dict) -> dict:
         where = {}
         filters = []
         
-        if startup_context:
-            sector = startup_context.get("sector", "").lower()
-            if "edtech" in sector:
-                filters.append({"applicable_segment": {"$contains": "EdTech"}})
-                
-            users = startup_context.get("users", "")
-            if "0" in str(users) or "zero" in str(users).lower():
-                filters.append({"market_phase": {"$eq": "0_to_1"}})
-                
-            market = startup_context.get("market", "").lower()
-            if "india" in market:
-                filters.append({"indian_market_applicable": {"$eq": True}})
-                
-        if len(filters) == 1:
-            where = filters[0]
-        elif len(filters) > 1:
-            where = {"$and": filters}
-            
-        return where if where else None
+        # We disable strict metadata filtering for now because it causes 0 chunks returned
+        # if the ingested sources (like youtube videos) don't have the exact matching metadata keys.
+        return None
 
     def _cosine_similarity(self, v1: list, v2: list) -> float:
         a = np.array(v1)
@@ -74,6 +59,8 @@ class Retriever:
 
     def _query_collection(self, col_name: str, vector: list, n_results: int, where_filter: dict) -> List[Dict]:
         results = []
+        if not vector:
+            return results
         try:
             coll = get_collection(col_name)
             if coll.count() == 0:
